@@ -8,6 +8,7 @@ import (
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"image/color"
 	"log"
+	"math"
 	"os"
 )
 
@@ -27,7 +28,7 @@ type Object struct {
 
 var player = Object{
 	gray:         40,
-	Body:         resolv.NewRectangle(width/2, height/2, 20, 20),
+	Body:         resolv.NewRectangle(width/2, height*0.8, 20, 20),
 	Velocity:     Vector2{},
 	Acceleration: Vector2{X: 10.0, Y: 10.0},
 }
@@ -40,6 +41,9 @@ func main() {
 	})
 	addDebugMessage(func() string {
 		return fmt.Sprintf("Player.Velocity.Y=%.2f", player.Velocity.Y)
+	})
+	addDebugMessage(func() string {
+		return fmt.Sprintf("Player.Velocity.X=%.2f", player.Velocity.X)
 	})
 
 	// Add floor and ceiling to global space.
@@ -59,10 +63,10 @@ func update(screen *ebiten.Image) error {
 		player.Velocity.Y -= 50
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
-		player.Velocity.X -= 10
+		player.Velocity.X -= 100
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
-		player.Velocity.X += 10
+		player.Velocity.X += 100
 	}
 
 	// Basic physics.
@@ -78,8 +82,10 @@ func update(screen *ebiten.Image) error {
 	if collision.Colliding() {
 		player.Velocity.X = 0
 	} else {
-		//player.Velocity.X -= 100 * delta
-
+		player.Velocity.X *= 0.9
+		if math.Abs(player.Velocity.X) < 0.5 {
+			player.Velocity.X = 0
+		}
 	}
 
 	collision = walls.Resolve(player.Body, 0, dy)
