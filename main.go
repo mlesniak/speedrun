@@ -56,6 +56,7 @@ func main() {
 	walls = resolv.NewSpace()
 	walls.Add(resolv.NewRectangle(0, height, width, height))
 	walls.Add(resolv.NewRectangle(0, 0, width, 0))
+	walls.Add(resolv.NewLine(0, 0, 0, height))
 
 	if err := ebiten.Run(update, width, height, 1, title); err != nil {
 		log.Fatal(err)
