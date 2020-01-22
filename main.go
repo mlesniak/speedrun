@@ -125,6 +125,9 @@ func initGame() {
 var frameCounter = 0
 
 func update(screen *ebiten.Image) error {
+	if frameCounter == 0 {
+	}
+
 	frameCounter++
 	checkExitKey()
 	checkDebugKey()
@@ -154,16 +157,29 @@ func update(screen *ebiten.Image) error {
 	return nil
 }
 
+var audioPlayed = make(map[string]bool)
+
 func drawHUD(screen *ebiten.Image) {
 	passedTime := 4 - time.Now().Sub(startTime).Seconds()
-	if passedTime < 0 {
+	if passedTime < 1 {
+		audioPlayed = make(map[string]bool)
+		go func() {
+			audioPlayer["start"].Play()
+			defer audioPlayer["start"].Rewind()
+		}()
 		hud = false
 		startTime = time.Now()
 		return
 	}
 	secs := fmt.Sprintf("%d...", int(passedTime))
-	if passedTime < 1 {
-		secs = "Go!"
+	// Play only once. Could we use sync.Once and Do?
+	if !audioPlayed[secs] {
+		audioPlayed[secs] = true
+		go func() {
+
+			audioPlayer["countdown"].Play()
+			defer audioPlayer["countdown"].Rewind()
+		}()
 	}
 	text.Draw(screen, secs, arcadeFontLarge, width/2-len(secs)*50/2, height/2, color.Gray{Y: 200})
 }

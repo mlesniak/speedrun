@@ -13,9 +13,12 @@ github.com/hajimehoshi/ebiten v1.10.3 h1:ywrEsXclsjrdKIhYYrmy/yxLFCd1y4efGVsnFRl
 github.com/hajimehoshi/ebiten v1.10.3/go.mod h1:i9dIEUf5/MuPtbK1/wHR0PB7ZtqhjOxxg+U1xfxapcY=
 github.com/hajimehoshi/go-mp3 v0.2.1/go.mod h1:Rr+2P46iH6PwTPVgSsEwBkon0CK5DxCAeX/Rp65DCTE=
 github.com/hajimehoshi/oto v0.3.4/go.mod h1:PgjqsBJff0efqL2nlMJidJgVJywLn6M4y8PI4TfeWfA=
+github.com/hajimehoshi/oto v0.5.4 h1:Dn+WcYeF310xqStKm0tnvoruYUV5Sce8+sfUaIvWGkE=
 github.com/hajimehoshi/oto v0.5.4/go.mod h1:0QXGEkbuJRohbJaxr7ZQSxnju7hEhseiPx2hrh6raOI=
 github.com/jakecoffman/cp v0.1.0/go.mod h1:a3xPx9N8RyFAACD644t2dj/nK4SuLg1v+jL61m2yVo4=
+github.com/jfreymuth/oggvorbis v1.0.0 h1:aOpiihGrFLXpsh2osOlEvTcg5/aluzGQeC7m3uYWOZ0=
 github.com/jfreymuth/oggvorbis v1.0.0/go.mod h1:abe6F9QRjuU9l+2jek3gj46lu40N4qlYxh2grqkLEDM=
+github.com/jfreymuth/vorbis v1.0.0 h1:SmDf783s82lIjGZi8EGUUaS7YxPHgRj4ZXW/h7rUi7U=
 github.com/jfreymuth/vorbis v1.0.0/go.mod h1:8zy3lUAm9K/rJJk223RKy6vjCZTWC61NA2QD06bfOE0=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
