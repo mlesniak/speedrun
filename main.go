@@ -37,7 +37,7 @@ type Object struct {
 
 var player = Object{
 	gray:         40,
-	Body:         resolv.NewRectangle(width/2, height*0.8, 20, 20),
+	Body:         resolv.NewRectangle(0, height-20, 20, 20),
 	Velocity:     Vector2{},
 	Acceleration: Vector2{X: 10.0, Y: 10.0},
 }
