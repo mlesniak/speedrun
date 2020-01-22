@@ -47,6 +47,10 @@ var randomSeed seed.Seed
 var startTime time.Time
 var finalTime = 0.0
 
+// Add scenes instead of a single boolean variable.
+var hud = true
+var countDown time.Time
+
 func main() {
 	addDebugMessage(func() string {
 		return fmt.Sprintf("Levelcode %s", randomSeed.Code)
@@ -61,8 +65,7 @@ func main() {
 		return fmt.Sprintf("Player.Velocity.X=%.2f", player.Velocity.X)
 	})
 
-	initGame()
-
+	newGame()
 	if err := ebiten.Run(update, width, height, 1, title); err != nil {
 		log.Fatal(err)
 	}
@@ -115,6 +118,9 @@ func initGame() {
 	// Start startTime
 	finalTime = 0.0
 	startTime = time.Now()
+
+	// For HUD.
+	countDown = time.Now()
 }
 
 var frameCounter = 0
@@ -124,20 +130,40 @@ func update(screen *ebiten.Image) error {
 	checkExitKey()
 	checkDebugKey()
 	checkGameControlKeys()
-	updateState()
+
+	if !hud {
+		updateState()
+	}
 
 	if ebiten.IsDrawingSkipped() {
 		return nil
 	}
 
 	drawBackground(screen)
-	drawGoal(screen, goal)
-	draw(screen, player)
-	drawBlocks(screen)
-	drawLevelCode(screen)
-	drawTimer(screen)
+
+	if !hud {
+		drawGoal(screen, goal)
+		draw(screen, player)
+		drawBlocks(screen)
+		drawLevelCode(screen)
+		drawTimer(screen)
+	} else {
+		drawHUD(screen)
+	}
+
 	debugInfo(screen)
 	return nil
+}
+
+func drawHUD(screen *ebiten.Image) {
+	passedTime := 4 - time.Now().Sub(startTime).Seconds()
+	if passedTime < 1 {
+		hud = false
+		startTime = time.Now()
+		return
+	}
+	secs := fmt.Sprintf("%d ...", int(passedTime))
+	text.Draw(screen, secs, arcadeFontBig, width/2-len(secs)*30/2, height/2, color.Gray{Y: 200})
 }
 
 func updateState() {
@@ -218,10 +244,12 @@ func updateState() {
 
 func checkGameControlKeys() {
 	if inpututil.IsKeyJustReleased(ebiten.KeyR) {
+		hud = true
 		initGame()
 	}
 
 	if inpututil.IsKeyJustReleased(ebiten.KeyN) {
+		hud = true
 		newGame()
 	}
 }
