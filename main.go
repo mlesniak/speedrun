@@ -36,13 +36,7 @@ type Object struct {
 	PreviousPosition []Vector2
 }
 
-var player = Object{
-	gray:         40,
-	Body:         resolv.NewRectangle(0, height-20, 20, 20),
-	Velocity:     Vector2{},
-	Acceleration: Vector2{X: 10.0, Y: 10.0},
-}
-
+var player Object
 var walls *resolv.Space
 var goals *resolv.Space
 var blocks = []Object{}
@@ -75,6 +69,13 @@ func main() {
 }
 
 func initGame() {
+	player = Object{
+		gray:         40,
+		Body:         resolv.NewRectangle(0, height-20, 20, 20),
+		Velocity:     Vector2{},
+		Acceleration: Vector2{X: 10.0, Y: 10.0},
+	}
+
 	// Add floor and ceiling to global space.
 	walls = resolv.NewSpace()
 	walls.Add(resolv.NewRectangle(0, height, width, height))
@@ -105,6 +106,7 @@ func initGame() {
 	}
 
 	// Start startTime
+	finalTime = 0.0
 	startTime = time.Now()
 }
 
@@ -114,6 +116,7 @@ func update(screen *ebiten.Image) error {
 	frameCounter++
 	checkExitKey()
 	checkDebugKey()
+	checkRestartKey()
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
 		player.jumped++
@@ -201,6 +204,12 @@ func update(screen *ebiten.Image) error {
 	drawTimer(screen)
 	debugInfo(screen)
 	return nil
+}
+
+func checkRestartKey() {
+	if inpututil.IsKeyJustReleased(ebiten.KeyR) {
+		initGame()
+	}
 }
 
 func drawTimer(screen *ebiten.Image) {
