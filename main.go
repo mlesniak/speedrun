@@ -54,9 +54,6 @@ var startTime time.Time
 var finalTime = 0.0
 
 func main() {
-	randomSeed = seed.New()
-	rand.Seed(randomSeed.Seed)
-
 	addDebugMessage(func() string {
 		return fmt.Sprintf("Levelcode %s", randomSeed.Code)
 	})
@@ -70,6 +67,14 @@ func main() {
 		return fmt.Sprintf("Player.Velocity.X=%.2f", player.Velocity.X)
 	})
 
+	initGame()
+
+	if err := ebiten.Run(update, width, height, 1, title); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func initGame() {
 	// Add floor and ceiling to global space.
 	walls = resolv.NewSpace()
 	walls.Add(resolv.NewRectangle(0, height, width, height))
@@ -85,7 +90,12 @@ func main() {
 	}
 	goals.Add(goal.Body)
 
+	// Randomize...
+	randomSeed = seed.New()
+	rand.Seed(randomSeed.Seed)
+
 	// Add dynamic blocks.
+	blocks = []Object{}
 	blocks = append(blocks, Object{
 		gray: uint8(10 + rand.Intn(50)),
 		Body: resolv.NewRectangle(rand.Int31n(width), rand.Int31n(height), 40, 40),
@@ -96,10 +106,6 @@ func main() {
 
 	// Start startTime
 	startTime = time.Now()
-
-	if err := ebiten.Run(update, width, height, 1, title); err != nil {
-		log.Fatal(err)
-	}
 }
 
 var frameCounter = 0
