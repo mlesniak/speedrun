@@ -157,12 +157,15 @@ func update(screen *ebiten.Image) error {
 
 func drawHUD(screen *ebiten.Image) {
 	passedTime := 4 - time.Now().Sub(startTime).Seconds()
-	if passedTime < 1 {
+	if passedTime < 0 {
 		hud = false
 		startTime = time.Now()
 		return
 	}
 	secs := fmt.Sprintf("%d ...", int(passedTime))
+	if passedTime < 1 {
+		secs = "Go!"
+	}
 	text.Draw(screen, secs, arcadeFontBig, width/2-len(secs)*30/2, height/2, color.Gray{Y: 200})
 }
 
