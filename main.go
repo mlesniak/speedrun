@@ -97,10 +97,13 @@ func initGame() {
 
 	// Add dynamic blocks.
 	blocks = []Object{}
-	blocks = append(blocks, Object{
-		gray: uint8(10 + rand.Intn(50)),
-		Body: resolv.NewRectangle(rand.Int31n(width), rand.Int31n(height), 40, 40),
-	})
+	numBlocks := 20
+	for i := 0; i < numBlocks; i++ {
+		blocks = append(blocks, Object{
+			gray: uint8(10 + rand.Intn(50)),
+			Body: resolv.NewRectangle(rand.Int31n(width)/40*40, rand.Int31n(height)/40*40, 40, 40),
+		})
+	}
 	for _, block := range blocks {
 		walls.Add(block.Body)
 	}
