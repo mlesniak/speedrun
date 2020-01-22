@@ -47,9 +47,6 @@ var blocks = []Object{}
 
 var randomSeed seed.Seed
 
-// If true, debug information is displayed.
-var showDebug = false
-
 func main() {
 	randomSeed = seed.New()
 	rand.Seed(randomSeed.Seed)
@@ -187,12 +184,6 @@ func drawBlocks(screen *ebiten.Image) {
 func checkExitKey() {
 	if ebiten.IsKeyPressed(ebiten.KeyEscape) || ebiten.IsKeyPressed(ebiten.KeyQ) {
 		os.Exit(0)
-	}
-}
-
-func checkDebugKey() {
-	if inpututil.IsKeyJustReleased(ebiten.KeyD) {
-		showDebug = !showDebug
 	}
 }
 
