@@ -42,10 +42,10 @@ func main() {
 		return fmt.Sprintf("Player.Velocity.Y=%.2f", player.Velocity.Y)
 	})
 
-	// Add floor to global space.
+	// Add floor and ceiling to global space.
 	walls = resolv.NewSpace()
-	floor := resolv.NewRectangle(0, height, width, height)
-	walls.Add(floor)
+	walls.Add(resolv.NewRectangle(0, height, width, height))
+	walls.Add(resolv.NewRectangle(0, 0, width, 0))
 
 	if err := ebiten.Run(update, width, height, 1, title); err != nil {
 		log.Fatal(err)
