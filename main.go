@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/SolarLune/resolv/resolv"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
@@ -19,18 +20,16 @@ type Vector2 struct {
 type Object struct {
 	gray uint8
 
-	X, Y     float64
-	W, H     float64
-	Velocity Vector2
+	Body         *resolv.Rectangle
+	Velocity     Vector2
+	Acceleration Vector2
 }
 
 var player = Object{
-	gray:     40,
-	X:        width / 2,
-	Y:        height / 2,
-	W:        20,
-	H:        20,
-	Velocity: Vector2{0, 0.0},
+	gray:         40,
+	Body:         resolv.NewRectangle(width/2, height/2, 20, 20),
+	Velocity:     Vector2{},
+	Acceleration: Vector2{X: 10.0, Y: 10.0},
 }
 
 func main() {
@@ -60,8 +59,8 @@ func update(screen *ebiten.Image) error {
 
 	// Basic physics.
 	delta := 1.0 / float64(ebiten.MaxTPS())
-	player.X += player.Velocity.X * delta
-	player.Y += player.Velocity.Y * delta
+	player.Body.X += int32(player.Velocity.X * delta * player.Acceleration.X)
+	player.Body.Y += int32(player.Velocity.Y * delta * player.Acceleration.Y)
 	player.Velocity.Y -= gravity * delta
 
 	if ebiten.IsDrawingSkipped() {
@@ -85,5 +84,7 @@ func drawBackground(screen *ebiten.Image) {
 }
 
 func draw(screen *ebiten.Image, object Object) {
-	ebitenutil.DrawRect(screen, object.X, height-object.Y, object.W, object.H, color.Gray{Y: object.gray})
+	ebitenutil.DrawRect(screen,
+		float64(object.Body.X), float64(height-object.Body.Y), float64(object.Body.W), float64(object.Body.H),
+		color.Gray{Y: object.gray})
 }
