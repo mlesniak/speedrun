@@ -7,6 +7,7 @@ import (
 )
 
 var arcadeFont font.Face
+var arcadeFontBig font.Face
 
 func init() {
 	pix, err := ioutil.ReadFile("assets/arcadepix.ttf")
@@ -22,6 +23,12 @@ func init() {
 	const dpi = 72
 	arcadeFont = truetype.NewFace(tt, &truetype.Options{
 		Size:    20,
+		DPI:     dpi,
+		Hinting: font.HintingFull,
+	})
+
+	arcadeFontBig = truetype.NewFace(tt, &truetype.Options{
+		Size:    40,
 		DPI:     dpi,
 		Hinting: font.HintingFull,
 	})

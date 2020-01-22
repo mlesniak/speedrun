@@ -13,6 +13,7 @@ import (
 	"math/rand"
 	"os"
 	"speedrun/seed"
+	"time"
 )
 
 const gravity = 100
@@ -48,6 +49,8 @@ var blocks = []Object{}
 var goal Object
 
 var randomSeed seed.Seed
+
+var startTime time.Time
 
 func main() {
 	randomSeed = seed.New()
@@ -86,6 +89,9 @@ func main() {
 	for _, block := range blocks {
 		walls.Add(block.Body)
 	}
+
+	// Start startTime
+	startTime = time.Now()
 
 	if err := ebiten.Run(update, width, height, 1, title); err != nil {
 		log.Fatal(err)
@@ -176,19 +182,26 @@ func update(screen *ebiten.Image) error {
 	draw(screen, player)
 	drawBlocks(screen)
 	drawLevelCode(screen)
+	drawTimer(screen)
 	debugInfo(screen)
 	return nil
+}
+
+func drawTimer(screen *ebiten.Image) {
+	passedTime := time.Now().Sub(startTime).Seconds()
+	secs := fmt.Sprintf("%.3f", passedTime)
+	text.Draw(screen, secs, arcadeFontBig, width-len(secs)*30, 45, color.Gray{Y: 200})
+}
+
+func drawLevelCode(screen *ebiten.Image) {
+	// Currently hard-coded, although we could use the font to retrieve the actual width and align correctly.
+	text.Draw(screen, randomSeed.Code, arcadeFont, 10, 30, color.Gray{Y: 150})
 }
 
 func drawGoal(screen *ebiten.Image, object Object) {
 	ebitenutil.DrawRect(screen,
 		float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
 		color.Gray{Y: object.gray})
-}
-
-func drawLevelCode(screen *ebiten.Image) {
-	// Currently hard-coded, although we could use the font to retrieve the actual width and align correctly.
-	text.Draw(screen, randomSeed.Code, arcadeFont, width-250, 30, color.Gray{Y: 150})
 }
 
 func drawBlocks(screen *ebiten.Image) {
