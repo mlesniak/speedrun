@@ -17,12 +17,7 @@ type Object struct {
 
 var player = Object{
 	gray:      40,
-	Rectangle: *resolv.NewRectangle(0, 240, 50, 50),
-}
-
-var obstacle = Object{
-	gray:      80,
-	Rectangle: *resolv.NewRectangle(600-50, 240, 50, 50),
+	Rectangle: *resolv.NewRectangle(width/2, height/2, 20, 20),
 }
 
 func main() {
@@ -32,19 +27,7 @@ func main() {
 }
 
 func update(screen *ebiten.Image) error {
-	// Simulate input.
-	dx := int32(10)
-
-	// Check for collision and update accordingly.
-	collision := resolv.Resolve(&player.Rectangle, &obstacle.Rectangle, dx, 0)
-	if collision.Colliding() {
-		dx = collision.ResolveX
-	}
-	player.X += dx
-
-	if ebiten.IsKeyPressed(ebiten.KeyEscape) || ebiten.IsKeyPressed(ebiten.KeyQ) {
-		os.Exit(0)
-	}
+	checkExitKey()
 
 	if ebiten.IsDrawingSkipped() {
 		return nil
@@ -53,8 +36,13 @@ func update(screen *ebiten.Image) error {
 	drawBackground(screen)
 	debugInfo(screen)
 	draw(screen, player)
-	draw(screen, obstacle)
 	return nil
+}
+
+func checkExitKey() {
+	if ebiten.IsKeyPressed(ebiten.KeyEscape) || ebiten.IsKeyPressed(ebiten.KeyQ) {
+		os.Exit(0)
+	}
 }
 
 func debugInfo(screen *ebiten.Image) {
