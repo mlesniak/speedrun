@@ -6,6 +6,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
+	"github.com/hajimehoshi/ebiten/text"
 	"image/color"
 	"log"
 	"math"
@@ -51,7 +52,7 @@ func main() {
 	rand.Seed(randomSeed.Seed)
 
 	addDebugMessage(func() string {
-		return fmt.Sprintf("Levelcode %s", randomSeed.Words)
+		return fmt.Sprintf("Levelcode %s", randomSeed.Code)
 	})
 	addDebugMessage(func() string {
 		return fmt.Sprintf("Player.Velocity.Y=%.2f", player.Velocity.Y)
@@ -161,8 +162,14 @@ func update(screen *ebiten.Image) error {
 	drawBackground(screen)
 	draw(screen, player)
 	drawBlocks(screen)
+	drawLevelCode(screen)
 	debugInfo(screen)
 	return nil
+}
+
+func drawLevelCode(screen *ebiten.Image) {
+	// Currently hard-coded, although we could use the font to retrieve the actual width and align correctly.
+	text.Draw(screen, randomSeed.Code, arcadeFont, width-250, 30, color.White)
 }
 
 func drawBlocks(screen *ebiten.Image) {

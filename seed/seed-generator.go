@@ -12,8 +12,8 @@ import (
 )
 
 type Seed struct {
-	Words string
-	Seed  int64
+	Code string
+	Seed int64
 }
 
 func New() Seed {
@@ -26,8 +26,8 @@ func NewWords(number int) Seed {
 	seed := computeSeed(text)
 
 	return Seed{
-		Words: text,
-		Seed:  seed,
+		Code: text,
+		Seed: seed,
 	}
 }
 
