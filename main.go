@@ -43,7 +43,9 @@ var player = Object{
 }
 
 var walls *resolv.Space
+var goals *resolv.Space
 var blocks = []Object{}
+var goal Object
 
 var randomSeed seed.Seed
 
@@ -67,6 +69,14 @@ func main() {
 	walls.Add(resolv.NewRectangle(0, 0, width, 0))
 	walls.Add(resolv.NewLine(0, 0, 0, height))
 	walls.Add(resolv.NewLine(width, 0, width, height)) // Temporary, until viewport scrolling is implemented.
+
+	// Add final goal
+	goals = resolv.NewSpace()
+	goal = Object{
+		gray: 255,
+		Body: resolv.NewRectangle(width-20-1, height-20, 20, 20),
+	}
+	goals.Add(goal.Body)
 
 	// Add dynamic blocks.
 	blocks = append(blocks, Object{
@@ -162,11 +172,18 @@ func update(screen *ebiten.Image) error {
 	}
 
 	drawBackground(screen)
+	drawGoal(screen, goal)
 	draw(screen, player)
 	drawBlocks(screen)
 	drawLevelCode(screen)
 	debugInfo(screen)
 	return nil
+}
+
+func drawGoal(screen *ebiten.Image, object Object) {
+	ebitenutil.DrawRect(screen,
+		float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
+		color.Gray{Y: object.gray})
 }
 
 func drawLevelCode(screen *ebiten.Image) {
