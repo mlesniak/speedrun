@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/SolarLune/resolv/resolv"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
@@ -51,9 +52,14 @@ func update(screen *ebiten.Image) error {
 	}
 
 	drawBackground(screen)
+	debugInfo(screen)
 	draw(screen, player)
 	draw(screen, obstacle)
 	return nil
+}
+
+func debugInfo(screen *ebiten.Image) {
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("TPS: %d", ebiten.MaxTPS()))
 }
 
 func drawBackground(screen *ebiten.Image) {
