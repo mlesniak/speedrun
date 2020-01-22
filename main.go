@@ -34,6 +34,13 @@ var player = Object{
 }
 
 func main() {
+	addDebugMessage(func() string {
+		return fmt.Sprintf("TPS %d", ebiten.MaxTPS())
+	})
+	addDebugMessage(func() string {
+		return fmt.Sprintf("Player.Velocity.Y=%.2f", player.Velocity.Y)
+	})
+
 	if err := ebiten.Run(update, width, height, 1, title); err != nil {
 		log.Fatal(err)
 	}
@@ -71,11 +78,6 @@ func checkExitKey() {
 	if ebiten.IsKeyPressed(ebiten.KeyEscape) || ebiten.IsKeyPressed(ebiten.KeyQ) {
 		os.Exit(0)
 	}
-}
-
-func debugInfo(screen *ebiten.Image) {
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("TPS: %d", ebiten.MaxTPS()))
-	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("Player.Velocity %.2f", player.Velocity), 0, 12)
 }
 
 func drawBackground(screen *ebiten.Image) {
