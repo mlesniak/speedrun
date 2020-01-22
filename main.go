@@ -124,7 +124,23 @@ func update(screen *ebiten.Image) error {
 	checkExitKey()
 	checkDebugKey()
 	checkGameControlKeys()
+	updateState()
 
+	if ebiten.IsDrawingSkipped() {
+		return nil
+	}
+
+	drawBackground(screen)
+	drawGoal(screen, goal)
+	draw(screen, player)
+	drawBlocks(screen)
+	drawLevelCode(screen)
+	drawTimer(screen)
+	debugInfo(screen)
+	return nil
+}
+
+func updateState() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
 		player.jumped++
 		switch player.jumped {
@@ -198,19 +214,6 @@ func update(screen *ebiten.Image) error {
 	if finalTime == 0.0 && player.Body.X == width-20-1 && player.Body.Y == height-20 {
 		finalTime = time.Now().Sub(startTime).Seconds()
 	}
-
-	if ebiten.IsDrawingSkipped() {
-		return nil
-	}
-
-	drawBackground(screen)
-	drawGoal(screen, goal)
-	draw(screen, player)
-	drawBlocks(screen)
-	drawLevelCode(screen)
-	drawTimer(screen)
-	debugInfo(screen)
-	return nil
 }
 
 func checkGameControlKeys() {
