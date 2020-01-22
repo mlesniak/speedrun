@@ -36,7 +36,9 @@ func main() {
 }
 
 func update(screen *ebiten.Image) error {
-	dx := 20.0
+	// Simulate input.
+	dx := 2.0
+
 	// Check for collision.
 	collision := resolv.Resolve(&player.shape, &obstacle.shape, int32(dx), 0)
 	if collision.Colliding() {
