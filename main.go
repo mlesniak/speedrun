@@ -46,6 +46,7 @@ var randomSeed seed.Seed
 
 var startTime time.Time
 var finalTime = 0.0
+var bestTime = math.MaxFloat64
 
 // Add scenes instead of a single boolean variable.
 var hud = true
@@ -73,6 +74,7 @@ func main() {
 
 func newGame() {
 	randomSeed = seed.New()
+	bestTime = math.MaxFloat64
 	initGame()
 }
 
@@ -257,6 +259,9 @@ func updateState() {
 	// Will be changed if we add viewports.
 	if finalTime == 0.0 && player.Body.X == width-20-1 && player.Body.Y == height-20 {
 		finalTime = time.Now().Sub(startTime).Seconds()
+		if finalTime < bestTime {
+			bestTime = finalTime
+		}
 	}
 }
 
@@ -281,6 +286,11 @@ func drawTimer(screen *ebiten.Image) {
 	}
 	secs := fmt.Sprintf("%.3f", passedTime)
 	text.Draw(screen, secs, arcadeFontBig, width-len(secs)*30, 45, color.Gray{Y: 200})
+
+	if bestTime != math.MaxFloat64 {
+		best := fmt.Sprintf("HIGH %.3f", bestTime)
+		text.Draw(screen, best, arcadeFont, width-len(best)*15, 80, color.Gray{Y: 150})
+	}
 }
 
 func drawLevelCode(screen *ebiten.Image) {
