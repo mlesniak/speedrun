@@ -58,6 +58,12 @@ func update(screen *ebiten.Image) error {
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
 		player.Velocity.Y -= 50
 	}
+	if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
+		player.Velocity.X -= 10
+	}
+	if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
+		player.Velocity.X += 10
+	}
 
 	// Basic physics.
 	delta := 1.0 / float64(ebiten.MaxTPS())
@@ -68,12 +74,18 @@ func update(screen *ebiten.Image) error {
 	if collision.Colliding() {
 		dx = collision.ResolveX
 	}
+	player.Body.X += dx
+	if collision.Colliding() {
+		player.Velocity.X = 0
+	} else {
+		//player.Velocity.X -= 100 * delta
+
+	}
+
 	collision = walls.Resolve(player.Body, 0, dy)
 	if collision.Colliding() {
 		dy = collision.ResolveY
 	}
-
-	player.Body.X += dx
 	player.Body.Y += dy
 	if collision.Colliding() {
 		player.Velocity.Y = 0
