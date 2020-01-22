@@ -66,6 +66,7 @@ func main() {
 	walls.Add(resolv.NewRectangle(0, height, width, height))
 	walls.Add(resolv.NewRectangle(0, 0, width, 0))
 	walls.Add(resolv.NewLine(0, 0, 0, height))
+	walls.Add(resolv.NewLine(width, 0, width, height)) // Temporary, until viewport scrolling is implemented.
 
 	// Add dynamic blocks.
 	blocks = append(blocks, Object{
