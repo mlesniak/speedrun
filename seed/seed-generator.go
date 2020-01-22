@@ -43,7 +43,7 @@ func computeSeed(words string) int64 {
 	for _, c := range "abcdef" {
 		numbers = strings.ReplaceAll(numbers, string(c), "")
 	}
-	numbers = numbers[:len(fmt.Sprintf("%d", math.MaxInt64))]
+	numbers = numbers[:len(fmt.Sprintf("%d", math.MaxInt64))-1]
 
 	seed, err := strconv.ParseInt(numbers, 10, 64)
 	if err != nil {
