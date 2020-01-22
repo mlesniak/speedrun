@@ -9,6 +9,7 @@ import (
 	"image/color"
 	"log"
 	"math"
+	"math/rand"
 	"os"
 )
 
@@ -40,6 +41,7 @@ var player = Object{
 }
 
 var walls *resolv.Space
+var blocks = []Object{}
 
 func main() {
 	addDebugMessage(func() string {
@@ -57,6 +59,15 @@ func main() {
 	walls.Add(resolv.NewRectangle(0, height, width, height))
 	walls.Add(resolv.NewRectangle(0, 0, width, 0))
 	walls.Add(resolv.NewLine(0, 0, 0, height))
+
+	// Add dynamic blocks.
+	blocks = append(blocks, Object{
+		gray: uint8(10 + rand.Intn(50)),
+		Body: resolv.NewRectangle(rand.Int31n(width), rand.Int31n(height), 40, 40),
+	})
+	for _, block := range blocks {
+		walls.Add(block.Body)
+	}
 
 	if err := ebiten.Run(update, width, height, 1, title); err != nil {
 		log.Fatal(err)
@@ -144,7 +155,16 @@ func update(screen *ebiten.Image) error {
 	drawBackground(screen)
 	debugInfo(screen)
 	draw(screen, player)
+	drawBlocks(screen)
 	return nil
+}
+
+func drawBlocks(screen *ebiten.Image) {
+	for _, object := range blocks {
+		ebitenutil.DrawRect(screen,
+			float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
+			color.Gray{Y: object.gray})
+	}
 }
 
 func checkExitKey() {
