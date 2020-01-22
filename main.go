@@ -24,6 +24,9 @@ type Object struct {
 	Body         *resolv.Rectangle
 	Velocity     Vector2
 	Acceleration Vector2
+
+	// Number of times jumped
+	jumped int
 }
 
 var player = Object{
@@ -60,7 +63,13 @@ func update(screen *ebiten.Image) error {
 	checkExitKey()
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
-		player.Velocity.Y -= 50
+		player.jumped++
+		switch player.jumped {
+		case 1:
+			player.Velocity.Y -= 50
+		case 2:
+			player.Velocity.Y -= 50
+		}
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
 		player.Velocity.X -= 100
@@ -95,6 +104,7 @@ func update(screen *ebiten.Image) error {
 	player.Body.Y += dy
 	if collision.Colliding() {
 		player.Velocity.Y = 0
+		player.jumped = 0
 	} else {
 		player.Velocity.Y += gravity * delta
 	}
