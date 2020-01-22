@@ -32,6 +32,9 @@ func main() {
 }
 
 func update(screen *ebiten.Image) error {
+	dx := 10.0
+	player.x += dx
+
 	if ebiten.IsKeyPressed(ebiten.KeyEscape) || ebiten.IsKeyPressed(ebiten.KeyQ) {
 		os.Exit(0)
 	}
