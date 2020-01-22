@@ -35,7 +35,7 @@ func init() {
 	})
 
 	arcadeFontLarge = truetype.NewFace(tt, &truetype.Options{
-		Size:    80,
+		Size:    160,
 		DPI:     dpi,
 		Hinting: font.HintingFull,
 	})

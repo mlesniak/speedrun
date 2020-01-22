@@ -171,7 +171,7 @@ func drawHUD(screen *ebiten.Image) {
 		startTime = time.Now()
 		return
 	}
-	secs := fmt.Sprintf("%d...", int(passedTime))
+	secs := fmt.Sprintf("%d", int(passedTime))
 	// Play only once. Could we use sync.Once and Do?
 	if !audioPlayed[secs] {
 		audioPlayed[secs] = true
