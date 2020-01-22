@@ -68,6 +68,11 @@ func main() {
 	}
 }
 
+func newGame() {
+	randomSeed = seed.New()
+	initGame()
+}
+
 func initGame() {
 	player = Object{
 		gray:         40,
@@ -92,7 +97,6 @@ func initGame() {
 	goals.Add(goal.Body)
 
 	// Randomize...
-	randomSeed = seed.New()
 	rand.Seed(randomSeed.Seed)
 
 	// Add dynamic blocks.
@@ -119,7 +123,7 @@ func update(screen *ebiten.Image) error {
 	frameCounter++
 	checkExitKey()
 	checkDebugKey()
-	checkRestartKey()
+	checkGameControlKeys()
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
 		player.jumped++
@@ -209,9 +213,13 @@ func update(screen *ebiten.Image) error {
 	return nil
 }
 
-func checkRestartKey() {
+func checkGameControlKeys() {
 	if inpututil.IsKeyJustReleased(ebiten.KeyR) {
 		initGame()
+	}
+
+	if inpututil.IsKeyJustReleased(ebiten.KeyN) {
+		newGame()
 	}
 }
 
