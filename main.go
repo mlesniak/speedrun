@@ -27,6 +27,9 @@ type Object struct {
 
 	// Number of times jumped
 	jumped int
+
+	// Last N positions; we could remember the timestamp, too for more independence of the frameCounter counter.
+	PreviousPosition []Vector2
 }
 
 var player = Object{
@@ -59,7 +62,10 @@ func main() {
 	}
 }
 
+var frameCounter = 0
+
 func update(screen *ebiten.Image) error {
+	frameCounter++
 	checkExitKey()
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
@@ -120,6 +126,16 @@ func update(screen *ebiten.Image) error {
 		player.Velocity.Y += gravity * delta
 	}
 
+	// Update historic positions.
+	if frameCounter%numHistoricFramesUpdate == 0 {
+		if len(player.PreviousPosition) < numHistoricFrames {
+			player.PreviousPosition = append(player.PreviousPosition, Vector2{float64(player.Body.X), float64(player.Body.Y)})
+		} else {
+			player.PreviousPosition = player.PreviousPosition[1:]
+			player.PreviousPosition = append(player.PreviousPosition, Vector2{float64(player.Body.X), float64(player.Body.Y)})
+		}
+	}
+
 	if ebiten.IsDrawingSkipped() {
 		return nil
 	}
@@ -141,6 +157,14 @@ func drawBackground(screen *ebiten.Image) {
 }
 
 func draw(screen *ebiten.Image, object Object) {
+	if len(object.PreviousPosition) > 0 {
+		for _, vec := range object.PreviousPosition {
+			ebitenutil.DrawRect(screen,
+				vec.X+float64(object.Body.W)/4, vec.Y+float64(object.Body.H)/4, float64(object.Body.W)/4, float64(object.Body.H)/4,
+				color.Gray{Y: object.gray * 3})
+		}
+	}
+
 	ebitenutil.DrawRect(screen,
 		float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
 		color.Gray{Y: object.gray})
