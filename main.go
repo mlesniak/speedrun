@@ -104,7 +104,6 @@ func initGame() {
 
 	// Add dynamic blocks.
 	blocks = []Object{}
-	numBlocks := 20
 	for i := 0; i < numBlocks; i++ {
 		blocks = append(blocks, Object{
 			gray: uint8(10 + rand.Intn(50)),
