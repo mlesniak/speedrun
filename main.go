@@ -165,7 +165,7 @@ func drawHUD(screen *ebiten.Image) {
 	if passedTime < 1 {
 		secs = "Go!"
 	}
-	text.Draw(screen, secs, arcadeFontBig, width/2-len(secs)*30/2, height/2, color.Gray{Y: 200})
+	text.Draw(screen, secs, arcadeFontLarge, width/2-len(secs)*50/2, height/2, color.Gray{Y: 200})
 }
 
 func updateState() {
