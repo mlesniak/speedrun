@@ -66,16 +66,23 @@ func update(screen *ebiten.Image) error {
 		player.jumped++
 		switch player.jumped {
 		case 1:
-			player.Velocity.Y -= 50
+			player.Velocity.Y -= 75
 		case 2:
 			player.Velocity.Y -= 50
 		}
 	}
-	if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
-		player.Velocity.X -= 100
+	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
+		player.Velocity.X -= 5
 	}
-	if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
-		player.Velocity.X += 100
+	if ebiten.IsKeyPressed(ebiten.KeyRight) {
+		player.Velocity.X += 5
+	}
+	for math.Abs(player.Velocity.X) > 40 {
+		d := -0.01
+		if math.Signbit(player.Velocity.X) {
+			d *= -1
+		}
+		player.Velocity.X += d
 	}
 
 	// Basic physics.
@@ -91,8 +98,12 @@ func update(screen *ebiten.Image) error {
 	if collision.Colliding() {
 		player.Velocity.X = 0
 	} else {
-		player.Velocity.X *= 0.9
-		if math.Abs(player.Velocity.X) < 0.5 {
+		if player.jumped > 0 {
+			player.Velocity.X *= 0.99
+		} else {
+			player.Velocity.X *= 0.9
+		}
+		if math.Abs(player.Velocity.X) < 0.01 && player.jumped == 0 {
 			player.Velocity.X = 0
 		}
 	}
