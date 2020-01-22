@@ -161,7 +161,7 @@ func drawHUD(screen *ebiten.Image) {
 		startTime = time.Now()
 		return
 	}
-	secs := fmt.Sprintf("%d ...", int(passedTime))
+	secs := fmt.Sprintf("%d...", int(passedTime))
 	if passedTime < 1 {
 		secs = "Go!"
 	}
