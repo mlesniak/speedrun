@@ -29,10 +29,10 @@ func debugInfo(screen *ebiten.Image) {
 	}
 
 	rowHeight := 14
-	y := 0
+	y := 50
 	for _, function := range debugFunctions {
 		msg := function()
-		ebitenutil.DebugPrintAt(screen, msg, 0, y)
+		ebitenutil.DebugPrintAt(screen, msg, 10, y)
 		y += rowHeight
 	}
 }

@@ -51,6 +51,7 @@ var goal Object
 var randomSeed seed.Seed
 
 var startTime time.Time
+var finalTime = 0.0
 
 func main() {
 	randomSeed = seed.New()
@@ -58,6 +59,9 @@ func main() {
 
 	addDebugMessage(func() string {
 		return fmt.Sprintf("Levelcode %s", randomSeed.Code)
+	})
+	addDebugMessage(func() string {
+		return fmt.Sprintf("FinalTime %g", finalTime)
 	})
 	addDebugMessage(func() string {
 		return fmt.Sprintf("Player.Velocity.Y=%.2f", player.Velocity.Y)
@@ -175,9 +179,8 @@ func update(screen *ebiten.Image) error {
 
 	// Check if goal reached.
 	// Will be changed if we add viewports.
-	//width-20-1, height-20, 20, 20),
-	if player.Body.X == width-20-1 && player.Body.Y == height-20 {
-		fmt.Println("Goal reached")
+	if finalTime == 0.0 && player.Body.X == width-20-1 && player.Body.Y == height-20 {
+		finalTime = time.Now().Sub(startTime).Seconds()
 	}
 
 	if ebiten.IsDrawingSkipped() {
@@ -195,7 +198,12 @@ func update(screen *ebiten.Image) error {
 }
 
 func drawTimer(screen *ebiten.Image) {
-	passedTime := time.Now().Sub(startTime).Seconds()
+	var passedTime float64
+	if finalTime != 0.0 {
+		passedTime = finalTime
+	} else {
+		passedTime = time.Now().Sub(startTime).Seconds()
+	}
 	secs := fmt.Sprintf("%.3f", passedTime)
 	text.Draw(screen, secs, arcadeFontBig, width-len(secs)*30, 45, color.Gray{Y: 200})
 }
