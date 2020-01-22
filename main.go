@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/hajimehoshi/ebiten/inpututil"
 	"image/color"
 	"log"
 	"os"
 )
 
-const gravity = -0.5
+const gravity = 10
 
 type Vector2 struct {
 	X, Y float64
@@ -29,7 +30,7 @@ var player = Object{
 	Y:        height / 2,
 	W:        20,
 	H:        20,
-	Velocity: Vector2{0, -50.0},
+	Velocity: Vector2{0, 0.0},
 }
 
 func main() {
@@ -41,11 +42,20 @@ func main() {
 func update(screen *ebiten.Image) error {
 	checkExitKey()
 
+	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+		player.Velocity.Y -= -20
+	}
+	if inpututil.IsKeyJustReleased(ebiten.KeyUp) {
+		if player.Velocity.Y < -6.0 {
+			player.Velocity.Y = -0.6
+		}
+	}
+
 	// Basic physics.
 	delta := 1.0 / float64(ebiten.MaxTPS())
 	player.X += player.Velocity.X * delta
 	player.Y += player.Velocity.Y * delta
-	player.Velocity.Y += gravity * delta
+	player.Velocity.Y -= gravity * delta
 
 	if ebiten.IsDrawingSkipped() {
 		return nil
@@ -65,6 +75,7 @@ func checkExitKey() {
 
 func debugInfo(screen *ebiten.Image) {
 	ebitenutil.DebugPrint(screen, fmt.Sprintf("TPS: %d", ebiten.MaxTPS()))
+	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("Player.Velocity %.2f", player.Velocity), 0, 12)
 }
 
 func drawBackground(screen *ebiten.Image) {
