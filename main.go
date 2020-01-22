@@ -10,23 +10,18 @@ import (
 )
 
 type Object struct {
-	x, y  float64
-	gray  uint8
-	shape resolv.Rectangle
+	gray uint8
+	resolv.Rectangle
 }
 
 var player = Object{
-	x:     0,
-	y:     240,
-	gray:  40,
-	shape: *resolv.NewRectangle(0, 240, 50, 50),
+	gray:      40,
+	Rectangle: *resolv.NewRectangle(0, 240, 50, 50),
 }
 
 var obstacle = Object{
-	x:     600 - 50,
-	y:     240,
-	gray:  80,
-	shape: *resolv.NewRectangle(600-50, 240, 50, 50),
+	gray:      80,
+	Rectangle: *resolv.NewRectangle(600-50, 240, 50, 50),
 }
 
 func main() {
@@ -37,16 +32,15 @@ func main() {
 
 func update(screen *ebiten.Image) error {
 	// Simulate input.
-	dx := 2.0
+	// TODO What happens with gamepad input < 1.0?
+	dx := int32(10)
 
-	// Check for collision.
-	collision := resolv.Resolve(&player.shape, &obstacle.shape, int32(dx), 0)
+	// Check for collision and update accordingly.
+	collision := resolv.Resolve(&player.Rectangle, &obstacle.Rectangle, dx, 0)
 	if collision.Colliding() {
-		dx = float64(collision.ResolveX)
+		dx = collision.ResolveX
 	}
-
-	player.x += dx
-	player.shape.X += int32(dx)
+	player.X += dx
 
 	if ebiten.IsKeyPressed(ebiten.KeyEscape) || ebiten.IsKeyPressed(ebiten.KeyQ) {
 		os.Exit(0)
@@ -67,5 +61,5 @@ func drawBackground(screen *ebiten.Image) {
 }
 
 func draw(screen *ebiten.Image, object Object) {
-	ebitenutil.DrawRect(screen, object.x, object.y, 50, 50, color.Gray{Y: object.gray})
+	ebitenutil.DrawRect(screen, float64(object.X), float64(object.Y), float64(object.W), float64(object.H), color.Gray{Y: object.gray})
 }
