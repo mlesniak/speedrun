@@ -11,7 +11,7 @@ import (
 	"math"
 	"math/rand"
 	"os"
-	"time"
+	"speedrun/seed"
 )
 
 const gravity = 100
@@ -44,11 +44,14 @@ var player = Object{
 var walls *resolv.Space
 var blocks = []Object{}
 
+var randomSeed seed.Seed
+
 func main() {
-	rand.Seed(time.Now().Unix())
+	randomSeed = seed.New()
+	rand.Seed(randomSeed.Seed)
 
 	addDebugMessage(func() string {
-		return fmt.Sprintf("TPS %d", ebiten.MaxTPS())
+		return fmt.Sprintf("Levelcode %s", randomSeed.Words)
 	})
 	addDebugMessage(func() string {
 		return fmt.Sprintf("Player.Velocity.Y=%.2f", player.Velocity.Y)
@@ -156,9 +159,9 @@ func update(screen *ebiten.Image) error {
 	}
 
 	drawBackground(screen)
-	debugInfo(screen)
 	draw(screen, player)
 	drawBlocks(screen)
+	debugInfo(screen)
 	return nil
 }
 
