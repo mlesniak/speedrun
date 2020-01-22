@@ -33,7 +33,6 @@ func main() {
 
 func update(screen *ebiten.Image) error {
 	// Simulate input.
-	// TODO What happens with gamepad input < 1.0?
 	dx := int32(10)
 
 	// Check for collision and update accordingly.
