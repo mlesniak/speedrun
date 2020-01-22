@@ -11,6 +11,7 @@ import (
 	"math"
 	"math/rand"
 	"os"
+	"time"
 )
 
 const gravity = 100
@@ -44,6 +45,8 @@ var walls *resolv.Space
 var blocks = []Object{}
 
 func main() {
+	rand.Seed(time.Now().Unix())
+
 	addDebugMessage(func() string {
 		return fmt.Sprintf("TPS %d", ebiten.MaxTPS())
 	})
