@@ -26,7 +26,7 @@ var obstacle = Object{
 }
 
 func main() {
-	if err := ebiten.Run(update, 600, 480, 1, "Speedrun"); err != nil {
+	if err := ebiten.Run(update, width, height, 1, title); err != nil {
 		log.Fatal(err)
 	}
 }
