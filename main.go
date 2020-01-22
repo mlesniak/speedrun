@@ -8,13 +8,21 @@ import (
 	"os"
 )
 
-type Player struct {
+type Object struct {
 	x, y float64
+	gray uint8
 }
 
-var player = Player{
-	x: 0,
-	y: 240,
+var player = Object{
+	x:    0,
+	y:    240,
+	gray: 40,
+}
+
+var obstacle = Object{
+	x:    600 - 50,
+	y:    240,
+	gray: 80,
 }
 
 func main() {
@@ -32,11 +40,16 @@ func update(screen *ebiten.Image) error {
 		return nil
 	}
 
-	screen.Fill(color.Gray{80})
-	drawPlayer(screen)
+	drawBackground(screen)
+	draw(screen, player)
+	draw(screen, obstacle)
 	return nil
 }
 
-func drawPlayer(screen *ebiten.Image) {
-	ebitenutil.DrawRect(screen, player.x, player.y, 50, 50, color.Gray{20})
+func drawBackground(screen *ebiten.Image) {
+	screen.Fill(color.Gray{Y: 100})
+}
+
+func draw(screen *ebiten.Image, object Object) {
+	ebitenutil.DrawRect(screen, object.x, object.y, 50, 50, color.Gray{Y: object.gray})
 }
