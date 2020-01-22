@@ -8,6 +8,15 @@ import (
 	"os"
 )
 
+type Player struct {
+	x, y float64
+}
+
+var player = Player{
+	x: 0,
+	y: 240,
+}
+
 func main() {
 	if err := ebiten.Run(update, 600, 480, 1, "Speedrun"); err != nil {
 		log.Fatal(err)
@@ -24,6 +33,10 @@ func update(screen *ebiten.Image) error {
 	}
 
 	screen.Fill(color.Gray{80})
-	ebitenutil.DrawRect(screen, 10, 10, 100, 100, color.White)
+	drawPlayer(screen)
 	return nil
+}
+
+func drawPlayer(screen *ebiten.Image) {
+	ebitenutil.DrawRect(screen, player.x, player.y, 50, 50, color.Gray{20})
 }
