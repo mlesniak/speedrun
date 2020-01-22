@@ -77,7 +77,7 @@ func main() {
 	goals = resolv.NewSpace()
 	goal = Object{
 		gray: 255,
-		Body: resolv.NewRectangle(width-20-1, height-20, 20, 20),
+		Body: resolv.NewRectangle(width-20-1, height-20, player.Body.W, player.Body.H),
 	}
 	goals.Add(goal.Body)
 
@@ -171,6 +171,13 @@ func update(screen *ebiten.Image) error {
 			player.PreviousPosition = player.PreviousPosition[1:]
 			player.PreviousPosition = append(player.PreviousPosition, Vector2{float64(player.Body.X), float64(player.Body.Y)})
 		}
+	}
+
+	// Check if goal reached.
+	// Will be changed if we add viewports.
+	//width-20-1, height-20, 20, 20),
+	if player.Body.X == width-20-1 && player.Body.Y == height-20 {
+		fmt.Println("Goal reached")
 	}
 
 	if ebiten.IsDrawingSkipped() {
