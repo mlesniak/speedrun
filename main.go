@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-const gravity = 20
+const gravity = 100
 
 type Vector2 struct {
 	X, Y float64
@@ -56,12 +56,7 @@ func update(screen *ebiten.Image) error {
 	checkExitKey()
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
-		player.Velocity.Y -= 20
-	}
-	if inpututil.IsKeyJustReleased(ebiten.KeyUp) {
-		if player.Velocity.Y > 6.0 {
-			player.Velocity.Y = 0.6
-		}
+		player.Velocity.Y -= 50
 	}
 
 	// Basic physics.
@@ -80,7 +75,11 @@ func update(screen *ebiten.Image) error {
 
 	player.Body.X += dx
 	player.Body.Y += dy
-	player.Velocity.Y += gravity * delta
+	if collision.Colliding() {
+		player.Velocity.Y = 0
+	} else {
+		player.Velocity.Y += gravity * delta
+	}
 
 	if ebiten.IsDrawingSkipped() {
 		return nil
