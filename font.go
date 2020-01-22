@@ -2,21 +2,26 @@ package main
 
 import (
 	"github.com/golang/freetype/truetype"
-	"github.com/hajimehoshi/ebiten/examples/resources/fonts"
 	"golang.org/x/image/font"
+	"io/ioutil"
 )
 
 var arcadeFont font.Face
 
 func init() {
-	tt, err := truetype.Parse(fonts.MPlus1pRegular_ttf)
+	pix, err := ioutil.ReadFile("assets/arcadepix.ttf")
+	if err != nil {
+		panic(err)
+	}
+
+	tt, err := truetype.Parse(pix)
 	if err != nil {
 		panic(err)
 	}
 
 	const dpi = 72
 	arcadeFont = truetype.NewFace(tt, &truetype.Options{
-		Size:    24,
+		Size:    20,
 		DPI:     dpi,
 		Hinting: font.HintingFull,
 	})

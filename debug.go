@@ -14,6 +14,10 @@ func addDebugMessage(f debugFunc) {
 }
 
 func debugInfo(screen *ebiten.Image) {
+	if !showDebug {
+		return
+	}
+
 	rowHeight := 14
 	y := 0
 	for _, function := range debugFunctions {
