@@ -3,7 +3,7 @@
 ¯\_(ツ)_/¯
 
 - Release 0.1
-    - Gamepad
+    - HUD: half seconds
 
 
 Music from https://patrickdearteaga.com/arcade-music/
