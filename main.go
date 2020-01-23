@@ -81,7 +81,10 @@ func main() {
 
 func newGame() {
 	randomSeed = seed.New()
-	//randomSeed = seed.NewPreset("tabby-uncia-reety")
+	if len(os.Args) > 1 {
+		randomSeed = seed.NewPreset(os.Args[1])
+	}
+
 	bestTime = math.MaxFloat64
 	initGame()
 }

@@ -5,5 +5,4 @@
 - Gamepad
 - Sound on Goal
 - Background music?
-- Start with code
 - Fullscreen key
