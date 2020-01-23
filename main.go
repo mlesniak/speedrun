@@ -66,8 +66,17 @@ func main() {
 		return fmt.Sprintf("Player.Velocity.X=%.2f", player.Velocity.X)
 	})
 
+	// Compute scaling factor for fullscreen.
+	scale := 1.0
+	if fullscreen {
+		w, _ := ebiten.ScreenSizeInFullscreen()
+		scale = float64(width) / float64(w)
+		ebiten.SetFullscreen(true)
+		ebiten.SetCursorVisible(false)
+	}
+
 	newGame()
-	if err := ebiten.Run(update, width, height, 1, title); err != nil {
+	if err := ebiten.Run(update, width, height, scale, title); err != nil {
 		log.Fatal(err)
 	}
 }
