@@ -50,7 +50,7 @@ var bestTime = math.MaxFloat64
 var borderWidth int32 = 5
 
 // Add scenes instead of a single boolean variable.
-var hud = false
+var hud = true
 var countDown time.Time
 
 func main() {
@@ -307,12 +307,11 @@ func updateState() {
 
 func checkGameControlKeys() {
 	if inpututil.IsKeyJustReleased(ebiten.KeyR) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton7) {
-		hud = false
 		initGame()
 	}
 
 	if inpututil.IsKeyJustReleased(ebiten.KeyN) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton6) {
-		hud = false
+		hud = true
 		newGame()
 	}
 }
