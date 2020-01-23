@@ -335,13 +335,13 @@ func drawBackground(screen *ebiten.Image) {
 func drawPlayer(screen *ebiten.Image, object Object) {
 	x := width / 2
 
-	//if len(object.PreviousPosition) > 0 {
-	//	for _, vec := range object.PreviousPosition {
-	//		ebitenutil.DrawRect(screen,
-	//			vec.X+float64(object.Body.W)/4, vec.Y+float64(object.Body.H)/4, float64(object.Body.W)/4, float64(object.Body.H)/4,
-	//			color.Gray{Y: object.gray * 3})
-	//	}
-	//}
+	if len(object.PreviousPosition) > 0 {
+		for _, vec := range object.PreviousPosition {
+			drawRect(screen,
+				vec.X+float64(object.Body.W)/4, vec.Y+float64(object.Body.H)/4, float64(object.Body.W)/4, float64(object.Body.H)/4,
+				color.Gray{Y: object.gray * 3})
+		}
+	}
 
 	ebitenutil.DrawRect(screen,
 		float64(x), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
