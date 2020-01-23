@@ -49,7 +49,7 @@ var finalTime = 0.0
 var bestTime = math.MaxFloat64
 
 // Add scenes instead of a single boolean variable.
-var hud = true
+var hud = false
 var countDown time.Time
 
 func main() {
@@ -97,16 +97,16 @@ func initGame() {
 
 	// Add floor and ceiling to global space.
 	walls = resolv.NewSpace()
-	walls.Add(resolv.NewRectangle(0, height, width, height))
-	walls.Add(resolv.NewRectangle(0, 0, width, 0))
+	walls.Add(resolv.NewRectangle(0, height, (width * widthFactor), height))
+	walls.Add(resolv.NewRectangle(0, 0, (width * widthFactor), 0))
 	walls.Add(resolv.NewLine(0, 0, 0, height))
-	walls.Add(resolv.NewLine(width, 0, width, height)) // Temporary, until viewport scrolling is implemented.
+	walls.Add(resolv.NewLine((width * widthFactor), 0, (width * widthFactor), height)) // Temporary, until viewport scrolling is implemented.
 
 	// Add final goal
 	goals = resolv.NewSpace()
 	goal = Object{
 		gray: 255,
-		Body: resolv.NewRectangle(width-20-1, height-20, player.Body.W, player.Body.H),
+		Body: resolv.NewRectangle((width*widthFactor)-20-1, height-20, player.Body.W, player.Body.H),
 	}
 	goals.Add(goal.Body)
 
@@ -118,7 +118,7 @@ func initGame() {
 	for i := 0; i < numBlocks; i++ {
 		blocks = append(blocks, Object{
 			gray: uint8(10 + rand.Intn(50)),
-			Body: resolv.NewRectangle(rand.Int31n(width)/40*40, rand.Int31n(height)/40*40, 40, 40),
+			Body: resolv.NewRectangle(rand.Int31n(width*widthFactor)/40*40, rand.Int31n(height)/40*40, 40, 40),
 		})
 	}
 	for _, block := range blocks {
@@ -277,12 +277,12 @@ func updateState() {
 
 func checkGameControlKeys() {
 	if inpututil.IsKeyJustReleased(ebiten.KeyR) {
-		hud = true
+		hud = false
 		initGame()
 	}
 
 	if inpututil.IsKeyJustReleased(ebiten.KeyN) {
-		hud = true
+		hud = false
 		newGame()
 	}
 }
