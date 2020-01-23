@@ -2,7 +2,7 @@
 
 A speedrun game. The goal is to reach the white box as fast as possible.
 
-[![](http://img.youtube.com/vi/C1_BILCPtJ0/0.jpg)](http://www.youtube.com/watch?v=C1_BILCPtJ0 "Speedrun 0.1")
+[![](youtube.png)](http://www.youtube.com/watch?v=C1_BILCPtJ0 "Speedrun 0.1")
 
 ## Controls
 
@@ -21,7 +21,7 @@ Features and remarks
 - Random levels with rememberable level names to replay
 - Highscores 
 - Using [ebiten](https://ebiten.org/) and [resolv](https://github.com/SolarLune/resolv).
-- The core is **currently a mess**, but it's released `¯\\_(ツ)_/¯`
+- The core is **currently a mess**, but hey, it's released ¯\\_(ツ)_/¯
 
 Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for the cool music!
 
