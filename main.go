@@ -212,7 +212,7 @@ func drawHUD(screen *ebiten.Image) {
 }
 
 func updateState() {
-	if inpututil.IsKeyJustPressed(ebiten.KeyUp) || ebiten.IsGamepadButtonPressed(0, ebiten.GamepadButton0) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton0) {
 		player.jumped++
 		switch player.jumped {
 		case 1:
@@ -221,6 +221,15 @@ func updateState() {
 			player.Velocity.Y -= 50
 		}
 	}
+
+	// Check axes of first gamepad.
+	axes := []float64{
+		ebiten.GamepadAxis(0, 0), // 0：The horizontal value of the left axis
+		ebiten.GamepadAxis(0, 1), // 1：The vertical value of the left axis
+		ebiten.GamepadAxis(0, 2), // 2：The horizontal value of the right axis
+		ebiten.GamepadAxis(0, 3)} // 3：The vertical value of the right axis
+	fmt.Println(axes)
+
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
 		player.Velocity.X -= 5
 	}
