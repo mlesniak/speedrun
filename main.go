@@ -120,7 +120,6 @@ func initGame() {
 		})
 	}
 	for _, block := range blocks {
-		fmt.Printf("block.X=%d\n", block.Body.X)
 		walls.Add(block.Body)
 	}
 
@@ -298,7 +297,7 @@ func drawTimer(screen *ebiten.Image) {
 	text.Draw(screen, secs, arcadeFontBig, width-len(secs)*30, 45, color.Gray{Y: 200})
 
 	if bestTime != math.MaxFloat64 {
-		best := fmt.Sprintf("HIGH %.3f", bestTime)
+		best := fmt.Sprintf("HIGH %.3f ", bestTime)
 		text.Draw(screen, best, arcadeFont, width-len(best)*15, 80, color.Gray{Y: 150})
 	}
 }
@@ -333,7 +332,7 @@ func drawBackground(screen *ebiten.Image) {
 }
 
 func drawPlayer(screen *ebiten.Image, object Object) {
-	x := getTranslation()
+	x := getXTranslation()
 
 	if len(object.PreviousPosition) > 0 {
 		for _, vec := range object.PreviousPosition {
@@ -345,20 +344,28 @@ func drawPlayer(screen *ebiten.Image, object Object) {
 
 	ebitenutil.DrawRect(screen,
 		float64(x), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
-		color.Gray{Y: object.gray})
+		//color.Gray{Y: object.gray})
+		color.RGBA{
+			R: 255,
+			G: 0,
+			B: 0,
+			A: 255,
+		})
 }
 
-func getTranslation() float64 {
+func getXTranslation() float64 {
 	if player.Body.X < width/2 {
 		return float64(player.Body.X)
+	}
+	if player.Body.X >= width*widthFactor-width/2 {
+		return width/2 + (float64(player.Body.X) - (width*widthFactor - width/2))
 	}
 	return width / 2
 }
 
-// Translate all coordinates in X by player.X + width/2 to create a fake viewport.
+// Translate all coordinates in player's X coordinate to create a fake viewport.
 func drawRect(dst *ebiten.Image, x, y, w, height float64, clr color.Color) {
-	// TODO Special cases on beginning and end.
-	translatedX := x - float64(player.Body.X) + getTranslation()
+	translatedX := x - float64(player.Body.X) + getXTranslation()
 	ebitenutil.DrawRect(dst, translatedX, y, w, height, clr)
 }
 

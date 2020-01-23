@@ -3,7 +3,6 @@
 ¯\_(ツ)_/¯
 
 - Gamepad
-- VIEWPORTS
 - Border for top and bottom
 - Shade for running
 - Sound on Goal
