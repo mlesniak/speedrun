@@ -128,7 +128,6 @@ func initGame() {
 		gray: 255,
 		Body: resolv.NewRectangle(int32(x), int32(y), player.Body.W, player.Body.H),
 	}
-	fmt.Println(goal.Body.X, goal.Body.Y)
 	goals.Add(goal.Body)
 
 	// Start startTime
