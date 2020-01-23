@@ -84,12 +84,11 @@ func newGame() {
 	}
 
 	bestTime = math.MaxFloat64
+	playBackgroundTimes("background", math.MaxInt32)
 	initGame()
 }
 
 func initGame() {
-	playBackground("background")
-
 	player = Object{
 		gray:         40,
 		Body:         resolv.NewRectangle(0, height-20-borderWidth, 20, 20),
