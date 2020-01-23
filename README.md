@@ -1,14 +1,37 @@
 # Overview
 
-¯\_(ツ)_/¯
+A speedrun game. The goal is to reach the white box as fast as possible.
 
-- Release 0.1 (called fuck it, ship it, show it)
-    - Release on GitHub
+[![](http://img.youtube.com/vi/C1_BILCPtJ0/0.jpg)](http://www.youtube.com/watch?v=C1_BILCPtJ0 "Speedrun 0.1")
 
-Music from https://patrickdearteaga.com/arcade-music/
+## Controls
 
-TODOS Release 0.2 (polish code)
+- Keyboard left, right and up for movement. `N` for a new level, `R` to restart the current one, `F` to toggle fullscreen.
+- Gamepad: left analog stick to move, `B` to jump,  `ZR` for a new level, `ZL` to restart the current one.
 
-- pack data
-- cleanup
-- menus
+## Release 0.1 (release name: 'F*ck it, Ship it')
+
+Features and remarks
+
+- Game runs :-)
+- Gamepad (Nintendo Pro Controller on a Mac) and keyboard support
+- Arcade physics
+- Dynamic viewport
+- Background music and game sound effects
+- Random levels with rememberable level names to replay
+- Highscores 
+- Using [ebiten](https://ebiten.org/) and [resolv](https://github.com/SolarLune/resolv).
+- The core is **currently a mess**, but it's released `¯\\_(ツ)_/¯`
+
+Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for the cool music!
+
+## TODOs
+
+- [] Extend this README
+- [] Cleanup code
+- [] Restructure files
+- [] Better gamepad support
+- [] Menus, Splashscreen
+- [] Ability to enter level codes
+- [] Pack into single binary
+- [] Release downloadable packages
