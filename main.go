@@ -67,8 +67,6 @@ func main() {
 	// Compute scaling factor for fullscreen.
 	scale := 1.0
 	if fullscreen {
-		w, _ := ebiten.ScreenSizeInFullscreen()
-		scale = float64(width) / float64(w)
 		ebiten.SetFullscreen(true)
 		ebiten.SetCursorVisible(false)
 	}
@@ -146,7 +144,9 @@ func update(screen *ebiten.Image) error {
 
 	frameCounter++
 	checkExitKey()
+	checkExitKey()
 	checkDebugKey()
+	checkFullscreenKey()
 	checkGameControlKeys()
 
 	if !hud {
@@ -336,6 +336,14 @@ func drawBlocks(screen *ebiten.Image) {
 func checkExitKey() {
 	if ebiten.IsKeyPressed(ebiten.KeyEscape) || ebiten.IsKeyPressed(ebiten.KeyQ) {
 		os.Exit(0)
+	}
+}
+
+func checkFullscreenKey() {
+	if inpututil.IsKeyJustReleased(ebiten.KeyF) {
+		fs := ebiten.IsFullscreen()
+		ebiten.SetFullscreen(!fs)
+		ebiten.SetCursorVisible(!fs)
 	}
 }
 

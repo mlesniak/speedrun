@@ -5,4 +5,3 @@
 - Gamepad
 - Sound on Goal
 - Background music?
-- Fullscreen key
