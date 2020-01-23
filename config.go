@@ -9,4 +9,4 @@ const widthFactor = 2
 const numHistoricFrames = 30
 const numHistoricFramesUpdate = 3
 
-const numBlocks = 30
+const numBlocks = 1

@@ -57,13 +57,10 @@ func main() {
 		return fmt.Sprintf("Levelcode %s", randomSeed.Code)
 	})
 	addDebugMessage(func() string {
-		return fmt.Sprintf("FinalTime %g", finalTime)
+		return fmt.Sprintf("X=%.2v", player.Body.X)
 	})
 	addDebugMessage(func() string {
-		return fmt.Sprintf("Player.Velocity.Y=%.2f", player.Velocity.Y)
-	})
-	addDebugMessage(func() string {
-		return fmt.Sprintf("Player.Velocity.X=%.2f", player.Velocity.X)
+		return fmt.Sprintf("Translation=%.2f", -float64(player.Body.X)-width/2)
 	})
 
 	// Compute scaling factor for fullscreen.
@@ -82,7 +79,8 @@ func main() {
 }
 
 func newGame() {
-	randomSeed = seed.New()
+	//randomSeed = seed.New()
+	randomSeed = seed.NewPreset("tabby-uncia-reety")
 	bestTime = math.MaxFloat64
 	initGame()
 }
@@ -122,6 +120,7 @@ func initGame() {
 		})
 	}
 	for _, block := range blocks {
+		fmt.Printf("block.X=%d\n", block.Body.X)
 		walls.Add(block.Body)
 	}
 
@@ -156,7 +155,7 @@ func update(screen *ebiten.Image) error {
 
 	if !hud {
 		drawGoal(screen, goal)
-		draw(screen, player)
+		drawPlayer(screen, player)
 		drawBlocks(screen)
 		drawLevelCode(screen)
 		drawTimer(screen)
@@ -165,6 +164,7 @@ func update(screen *ebiten.Image) error {
 	}
 
 	debugInfo(screen)
+	debugDrawPosition(screen)
 	return nil
 }
 
@@ -309,14 +309,14 @@ func drawLevelCode(screen *ebiten.Image) {
 }
 
 func drawGoal(screen *ebiten.Image, object Object) {
-	ebitenutil.DrawRect(screen,
+	drawRect(screen,
 		float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
 		color.Gray{Y: object.gray})
 }
 
 func drawBlocks(screen *ebiten.Image) {
 	for _, object := range blocks {
-		ebitenutil.DrawRect(screen,
+		drawRect(screen,
 			float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
 			color.Gray{Y: object.gray})
 	}
@@ -332,16 +332,37 @@ func drawBackground(screen *ebiten.Image) {
 	screen.Fill(color.Gray{Y: 100})
 }
 
-func draw(screen *ebiten.Image, object Object) {
-	if len(object.PreviousPosition) > 0 {
-		for _, vec := range object.PreviousPosition {
-			ebitenutil.DrawRect(screen,
-				vec.X+float64(object.Body.W)/4, vec.Y+float64(object.Body.H)/4, float64(object.Body.W)/4, float64(object.Body.H)/4,
-				color.Gray{Y: object.gray * 3})
-		}
-	}
+func drawPlayer(screen *ebiten.Image, object Object) {
+	x := width / 2
+
+	//if len(object.PreviousPosition) > 0 {
+	//	for _, vec := range object.PreviousPosition {
+	//		ebitenutil.DrawRect(screen,
+	//			vec.X+float64(object.Body.W)/4, vec.Y+float64(object.Body.H)/4, float64(object.Body.W)/4, float64(object.Body.H)/4,
+	//			color.Gray{Y: object.gray * 3})
+	//	}
+	//}
 
 	ebitenutil.DrawRect(screen,
-		float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
+		float64(x), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
 		color.Gray{Y: object.gray})
+}
+
+// Translate all coordinates in X by player.X + width/2 to create a fake viewport.
+func drawRect(dst *ebiten.Image, x, y, w, height float64, clr color.Color) {
+	// TODO Special cases on beginning and end.
+	translatedX := x - float64(player.Body.X) + width/2
+	ebitenutil.DrawRect(dst, translatedX, y, w, height, clr)
+}
+
+func debugDrawPosition(screen *ebiten.Image) {
+	if !showDebug {
+		return
+	}
+
+	px, py := ebiten.CursorPosition()
+	crossColor := color.RGBA{80, 80, 80, 255}
+	ebitenutil.DrawLine(screen, float64(px), 0, float64(px), float64(height), crossColor)
+	ebitenutil.DrawLine(screen, 0, float64(py), float64(width), float64(py), crossColor)
+	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("%v/%v", px, py), px+5, py+10)
 }

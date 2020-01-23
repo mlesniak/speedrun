@@ -20,6 +20,15 @@ func New() Seed {
 	return NewWords(3)
 }
 
+func NewPreset(text string) Seed {
+	seed := computeSeed(text)
+
+	return Seed{
+		Code: text,
+		Seed: seed,
+	}
+}
+
 func NewWords(number int) Seed {
 	words := randomWords(number)
 	text := strings.Join(words, "-")
@@ -58,7 +67,7 @@ func randomWords(number int) []string {
 		panic(err)
 	}
 
-	rnd := rand.New(rand.NewSource(time.Now().Unix()))
+	rnd := rand.New(rand.NewSource(time.Now().UnixNano()))
 
 	words := strings.Split(string(file), "\n")
 	result := make([]string, number)
