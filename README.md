@@ -13,6 +13,7 @@ A speedrun game. The goal is to reach the white box as fast as possible.
 
 Features and remarks
 
+- The core is **currently a mess**, but hey, it's released ¯\\_(ツ)_/¯
 - Game runs :-)
 - Gamepad (Nintendo Pro Controller on a Mac) and keyboard support
 - Arcade physics
@@ -21,17 +22,16 @@ Features and remarks
 - Random levels with rememberable level names to replay
 - Highscores 
 - Using [ebiten](https://ebiten.org/) and [resolv](https://github.com/SolarLune/resolv).
-- The core is **currently a mess**, but hey, it's released ¯\\_(ツ)_/¯
 
 Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for the cool music!
 
 ## TODOs
 
-- [] Extend this README
-- [] Cleanup code
-- [] Restructure files
-- [] Better gamepad support
-- [] Menus, Splashscreen
-- [] Ability to enter level codes
-- [] Pack into single binary
-- [] Release downloadable packages
+- [ ] Extend this README
+- [ ] Cleanup code
+- [ ] Restructure files
+- [ ] Better gamepad support
+- [ ] Menus, Splashscreen
+- [ ] Ability to enter level codes
+- [ ] Pack into single binary
+- [ ] Release downloadable packages
