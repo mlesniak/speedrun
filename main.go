@@ -265,8 +265,7 @@ func updateState() {
 	}
 
 	// Check if goal reached.
-	// Will be changed if we add viewports.
-	if finalTime == 0.0 && player.Body.X == (width*widthFactor)-20-1 && player.Body.Y == height-20 {
+	if finalTime == 0.0 && goals.IsColliding(player.Body) {
 		finalTime = time.Now().Sub(startTime).Seconds()
 		if finalTime < bestTime {
 			bestTime = finalTime

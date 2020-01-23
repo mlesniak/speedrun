@@ -7,4 +7,4 @@
 - Sound on Goal
 - Background music?
 - Start with code
-- Goal somewhere, touching is enough
+- Goal somewhere
