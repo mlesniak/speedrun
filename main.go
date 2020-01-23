@@ -182,30 +182,17 @@ func drawBorders(screen *ebiten.Image) {
 }
 
 // TODO move to audio.go
-var audioPlayed = make(map[string]bool)
-
 func drawHUD(screen *ebiten.Image) {
-	passedTime := 4 - time.Now().Sub(startTime).Seconds()
-	if passedTime < 1 {
-		audioPlayed = make(map[string]bool)
-		go func() {
-			audioPlayer["start"].Play()
-			defer audioPlayer["start"].Rewind()
-		}()
+	step := int64(750)
+	duration := int64(step * 4)
+	passedTime := duration - time.Now().Sub(startTime).Milliseconds()
+	if passedTime < step {
 		hud = false
 		startTime = time.Now()
 		return
 	}
+	passedTime = passedTime / step
 	secs := fmt.Sprintf("%d", int(passedTime))
-	// Play only once. Could we use sync.Once and Do?
-	if !audioPlayed[secs] {
-		audioPlayed[secs] = true
-		go func() {
-
-			audioPlayer["countdown"].Play()
-			defer audioPlayer["countdown"].Rewind()
-		}()
-	}
 	text.Draw(screen, secs, arcadeFontLarge, width/2-len(secs)*50/2, height/2, color.Gray{Y: 200})
 	text.Draw(screen, randomSeed.Code, arcadeFont, (width-len(randomSeed.Code)*10)/2, height/2+50, color.Gray{Y: 180})
 }
@@ -215,9 +202,9 @@ func updateState() {
 		player.jumped++
 		switch player.jumped {
 		case 1:
-			player.Velocity.Y -= 75
+			player.Velocity.Y -= float64(gravity) * 0.75
 		case 2:
-			player.Velocity.Y -= 50
+			player.Velocity.Y -= float64(gravity) * 0.50
 		}
 	}
 

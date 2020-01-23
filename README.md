@@ -2,13 +2,12 @@
 
 ¯\_(ツ)_/¯
 
-- Release 0.1
-    - HUD: half seconds
-
+- Release 0.1 (called fuck it, ship it, show it)
+    - Release on GitHub
 
 Music from https://patrickdearteaga.com/arcade-music/
 
-TODOs after release 0.1:
+TODOS Release 0.2 (polish code)
 
 - pack data
 - cleanup
