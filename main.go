@@ -80,8 +80,8 @@ func main() {
 }
 
 func newGame() {
-	//randomSeed = seed.New()
-	randomSeed = seed.NewPreset("tabby-uncia-reety")
+	randomSeed = seed.New()
+	//randomSeed = seed.NewPreset("tabby-uncia-reety")
 	bestTime = math.MaxFloat64
 	initGame()
 }
@@ -101,14 +101,6 @@ func initGame() {
 	walls.Add(resolv.NewLine(0, 0, 0, height))
 	walls.Add(resolv.NewLine((width * widthFactor), 0, (width * widthFactor), height)) // Temporary, until viewport scrolling is implemented.
 
-	// Add final goal
-	goals = resolv.NewSpace()
-	goal = Object{
-		gray: 255,
-		Body: resolv.NewRectangle((width*widthFactor)-20-1, height-20, player.Body.W, player.Body.H),
-	}
-	goals.Add(goal.Body)
-
 	// Randomize...
 	rand.Seed(randomSeed.Seed)
 
@@ -118,11 +110,23 @@ func initGame() {
 		blocks = append(blocks, Object{
 			gray: uint8(10 + rand.Intn(50)),
 			Body: resolv.NewRectangle(rand.Int31n(width*widthFactor)/40*40, rand.Int31n(height)/40*40, 40, 40),
+			// TODO Check that body does not collide with player.
 		})
 	}
 	for _, block := range blocks {
 		walls.Add(block.Body)
 	}
+
+	// Add final goal in the last page of the view.
+	goals = resolv.NewSpace()
+	x := rand.Intn(width/2) + ((width-1)*widthFactor - width/2)
+	y := rand.Intn(height)
+	goal = Object{
+		gray: 255,
+		Body: resolv.NewRectangle(int32(x), int32(y), player.Body.W, player.Body.H),
+	}
+	fmt.Println(goal.Body.X, goal.Body.Y)
+	goals.Add(goal.Body)
 
 	// Start startTime
 	finalTime = 0.0
