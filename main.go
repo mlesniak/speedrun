@@ -47,6 +47,7 @@ var randomSeed seed.Seed
 var startTime time.Time
 var finalTime = 0.0
 var bestTime = math.MaxFloat64
+var borderWidth int32 = 5
 
 // Add scenes instead of a single boolean variable.
 var hud = false
@@ -88,15 +89,15 @@ func newGame() {
 func initGame() {
 	player = Object{
 		gray:         40,
-		Body:         resolv.NewRectangle(0, height-20, 20, 20),
+		Body:         resolv.NewRectangle(0, height-20-borderWidth, 20, 20),
 		Velocity:     Vector2{},
 		Acceleration: Vector2{X: 10.0, Y: 10.0},
 	}
 
 	// Add floor and ceiling to global space.
 	walls = resolv.NewSpace()
-	walls.Add(resolv.NewRectangle(0, height, (width * widthFactor), height))
-	walls.Add(resolv.NewRectangle(0, 0, (width * widthFactor), 0))
+	walls.Add(resolv.NewRectangle(0, height-borderWidth, (width * widthFactor), height-borderWidth))
+	walls.Add(resolv.NewRectangle(0, 0+borderWidth, (width * widthFactor), 0+borderWidth))
 	walls.Add(resolv.NewLine(0, 0, 0, height))
 	walls.Add(resolv.NewLine((width * widthFactor), 0, (width * widthFactor), height)) // Temporary, until viewport scrolling is implemented.
 
@@ -156,6 +157,7 @@ func update(screen *ebiten.Image) error {
 		drawGoal(screen, goal)
 		drawPlayer(screen, player)
 		drawBlocks(screen)
+		drawBorders(screen)
 		drawLevelCode(screen)
 		drawTimer(screen)
 	} else {
@@ -165,6 +167,11 @@ func update(screen *ebiten.Image) error {
 	debugInfo(screen)
 	debugDrawPosition(screen)
 	return nil
+}
+
+func drawBorders(screen *ebiten.Image) {
+	ebitenutil.DrawRect(screen, 0, 0, width*widthFactor, float64(borderWidth), color.Gray{Y: 40})
+	ebitenutil.DrawRect(screen, 0, float64(height-borderWidth), width*widthFactor, float64(height-borderWidth), color.Gray{Y: 40})
 }
 
 var audioPlayed = make(map[string]bool)
