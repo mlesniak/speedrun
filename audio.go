@@ -28,9 +28,19 @@ func loadAudio(audioContext *audio.Context, name string) {
 }
 
 func playBackground(name string) {
+	playBackgroundTimes(name, 1)
+}
+
+func playBackgroundTimes(name string, times int) {
 	player := audioPlayer[name]
 	go func() {
-		player.Play()
 		defer player.Rewind()
+		for i := 0; i < times; i++ {
+			player.Play()
+			for player.IsPlaying() {
+				// Wait...
+			}
+			player.Rewind()
+		}
 	}()
 }

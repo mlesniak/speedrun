@@ -286,7 +286,7 @@ func updateState() {
 		finalTime = time.Now().Sub(startTime).Seconds()
 		if finalTime < bestTime {
 			bestTime = finalTime
-			playBackground("highscore")
+			playBackgroundTimes("goal", 2)
 		} else {
 			playBackground("goal")
 		}
