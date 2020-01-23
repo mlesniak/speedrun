@@ -3,5 +3,4 @@
 ¯\_(ツ)_/¯
 
 - Gamepad
-- Scaled Fullscreen
 - VIEWPORTS
