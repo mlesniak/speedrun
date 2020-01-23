@@ -88,7 +88,6 @@ func newGame() {
 }
 
 func initGame() {
-	// Play background music.
 	playBackground("background")
 
 	player = Object{

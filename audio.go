@@ -33,6 +33,10 @@ func playBackground(name string) {
 
 func playBackgroundTimes(name string, times int) {
 	player := audioPlayer[name]
+	if player.IsPlaying() {
+		player.Rewind()
+	}
+
 	go func() {
 		defer player.Rewind()
 		for i := 0; i < times; i++ {
