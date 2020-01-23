@@ -212,7 +212,7 @@ func drawHUD(screen *ebiten.Image) {
 }
 
 func updateState() {
-	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+	if inpututil.IsKeyJustPressed(ebiten.KeyUp) || ebiten.IsGamepadButtonPressed(0, ebiten.GamepadButton0) {
 		player.jumped++
 		switch player.jumped {
 		case 1:
