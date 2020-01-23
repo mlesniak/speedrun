@@ -180,6 +180,7 @@ func drawBorders(screen *ebiten.Image) {
 	ebitenutil.DrawRect(screen, 0, float64(height-borderWidth), width*widthFactor, float64(height-borderWidth), color.Gray{Y: 40})
 }
 
+// TODO move to audio.go
 var audioPlayed = make(map[string]bool)
 
 func drawHUD(screen *ebiten.Image) {
@@ -282,6 +283,9 @@ func updateState() {
 		finalTime = time.Now().Sub(startTime).Seconds()
 		if finalTime < bestTime {
 			bestTime = finalTime
+			playBackground("highscore")
+		} else {
+			playBackground("goal")
 		}
 	}
 }

@@ -3,5 +3,4 @@
 ¯\_(ツ)_/¯
 
 - Gamepad
-- Sound on Goal
 - Background music?

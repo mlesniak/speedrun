@@ -1,7 +1,7 @@
 package main
 
 const title = "Speedrun"
-const fullscreen = true
+const fullscreen = false
 const width = 960
 const height = 600
 const widthFactor = 2

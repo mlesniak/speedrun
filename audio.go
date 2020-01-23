@@ -14,6 +14,8 @@ func init() {
 	context, _ := audio.NewContext(44100)
 	loadAudio(context, "countdown")
 	loadAudio(context, "start")
+	loadAudio(context, "goal")
+	loadAudio(context, "highscore")
 }
 
 func loadAudio(audioContext *audio.Context, name string) {
@@ -21,4 +23,11 @@ func loadAudio(audioContext *audio.Context, name string) {
 	d, _ := vorbis.Decode(audioContext, file)
 	player, _ := audio.NewPlayer(audioContext, d)
 	audioPlayer[name] = player
+}
+
+func playBackground(name string) {
+	go func() {
+		audioPlayer[name].Play()
+		defer audioPlayer[name].Rewind()
+	}()
 }
