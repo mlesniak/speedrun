@@ -334,6 +334,7 @@ func drawBackground(screen *ebiten.Image) {
 func drawPlayer(screen *ebiten.Image, object Object) {
 	x := getXTranslation()
 
+	// Trail
 	if len(object.PreviousPosition) > 0 {
 		for _, vec := range object.PreviousPosition {
 			drawRect(screen,
@@ -342,9 +343,9 @@ func drawPlayer(screen *ebiten.Image, object Object) {
 		}
 	}
 
-	ebitenutil.DrawRect(screen,
-		x, float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
-		color.Gray{Y: object.gray})
+	//col := color.Gray{Y: object.gray}
+	col := color.RGBA{255, 255, 0, 255}
+	ebitenutil.DrawRect(screen, x, float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H), col)
 }
 
 func getXTranslation() float64 {
