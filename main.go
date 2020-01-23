@@ -344,8 +344,11 @@ func drawPlayer(screen *ebiten.Image, object Object) {
 	if len(object.PreviousPosition) > 0 {
 		for _, vec := range object.PreviousPosition {
 			drawRect(screen,
-				vec.X+float64(object.Body.W)/4, vec.Y+float64(object.Body.H)/4, float64(object.Body.W)/4, float64(object.Body.H)/4,
-				color.Gray{Y: object.gray * 3})
+				vec.X+float64(object.Body.W)/2-float64(object.Body.W)/8,
+				vec.Y+float64(object.Body.H)/2-float64(object.Body.H)/8,
+				float64(object.Body.W)/4,
+				float64(object.Body.H)/4,
+				color.Gray{Y: object.gray * 5})
 		}
 	}
 
