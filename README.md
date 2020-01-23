@@ -3,4 +3,6 @@
 ¯\_(ツ)_/¯
 
 - Gamepad
-- Background music?
+- Add jump sound
+
+Music from https://patrickdearteaga.com/arcade-music/

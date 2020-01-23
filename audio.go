@@ -7,15 +7,17 @@ import (
 )
 
 var audioPlayer map[string]*audio.Player
+var context *audio.Context
 
 func init() {
 	audioPlayer = make(map[string]*audio.Player)
 
-	context, _ := audio.NewContext(44100)
+	context, _ = audio.NewContext(44100)
 	loadAudio(context, "countdown")
 	loadAudio(context, "start")
 	loadAudio(context, "goal")
 	loadAudio(context, "highscore")
+	loadAudio(context, "background")
 }
 
 func loadAudio(audioContext *audio.Context, name string) {
@@ -26,8 +28,9 @@ func loadAudio(audioContext *audio.Context, name string) {
 }
 
 func playBackground(name string) {
+	player := audioPlayer[name]
 	go func() {
-		audioPlayer[name].Play()
-		defer audioPlayer[name].Rewind()
+		player.Play()
+		defer player.Rewind()
 	}()
 }

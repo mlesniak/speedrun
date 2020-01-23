@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/SolarLune/resolv/resolv"
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/audio"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"github.com/hajimehoshi/ebiten/text"
@@ -87,7 +88,12 @@ func newGame() {
 	initGame()
 }
 
+var backgroundMusic *audio.Player
+
 func initGame() {
+	// Play background music.
+	backgroundMusic = playBackground("background")
+
 	player = Object{
 		gray:         40,
 		Body:         resolv.NewRectangle(0, height-20-borderWidth, 20, 20),
