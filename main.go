@@ -343,14 +343,8 @@ func drawPlayer(screen *ebiten.Image, object Object) {
 	}
 
 	ebitenutil.DrawRect(screen,
-		float64(x), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
-		//color.Gray{Y: object.gray})
-		color.RGBA{
-			R: 255,
-			G: 0,
-			B: 0,
-			A: 255,
-		})
+		x, float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
+		color.Gray{Y: object.gray})
 }
 
 func getXTranslation() float64 {
