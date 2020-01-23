@@ -333,7 +333,7 @@ func drawBackground(screen *ebiten.Image) {
 }
 
 func drawPlayer(screen *ebiten.Image, object Object) {
-	x := width / 2
+	x := getTranslation()
 
 	if len(object.PreviousPosition) > 0 {
 		for _, vec := range object.PreviousPosition {
@@ -348,10 +348,17 @@ func drawPlayer(screen *ebiten.Image, object Object) {
 		color.Gray{Y: object.gray})
 }
 
+func getTranslation() float64 {
+	if player.Body.X < width/2 {
+		return float64(player.Body.X)
+	}
+	return width / 2
+}
+
 // Translate all coordinates in X by player.X + width/2 to create a fake viewport.
 func drawRect(dst *ebiten.Image, x, y, w, height float64, clr color.Color) {
 	// TODO Special cases on beginning and end.
-	translatedX := x - float64(player.Body.X) + width/2
+	translatedX := x - float64(player.Body.X) + getTranslation()
 	ebitenutil.DrawRect(dst, translatedX, y, w, height, clr)
 }
 
