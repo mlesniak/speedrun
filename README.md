@@ -15,9 +15,9 @@ Features and remarks
 
 - The core is **currently a mess**, but hey, it's released ¯\\_(ツ)_/¯
 - Game runs :-)
+- Self-implemented arcade physics
+- Self-implemented dynamic viewport
 - Gamepad (Nintendo Pro Controller on a Mac) and keyboard support
-- Arcade physics
-- Dynamic viewport
 - Background music and game sound effects
 - Random levels with rememberable level names to replay
 - Highscores 
