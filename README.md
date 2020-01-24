@@ -34,4 +34,8 @@ Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for th
 - [ ] Menus, Splashscreen
 - [ ] Ability to enter level codes
 - [ ] Pack into single binary
-- [ ] Release downloadable packages
+- [ ] Release downloadable packages 
+
+## License
+
+The source code is licensed under the [Apache license](https://raw.githubusercontent.com/mlesniak/speedrun/master/LICENSE)
