@@ -3,7 +3,8 @@ package main
 import (
 	"github.com/hajimehoshi/ebiten/audio"
 	"github.com/hajimehoshi/ebiten/audio/vorbis"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/markbates/pkger"
+	"io/ioutil"
 )
 
 var audioPlayer map[string]*audio.Player
@@ -21,8 +22,14 @@ func init() {
 }
 
 func loadAudio(audioContext *audio.Context, name string) {
-	file, _ := ebitenutil.OpenFile("assets/" + name + ".ogg")
-	d, _ := vorbis.Decode(audioContext, file)
+	b, err := pkger.Open("/assets/" + name + ".ogg")
+
+	if err != nil {
+		panic(err)
+	}
+	defer b.Close()
+	bs, _ := ioutil.ReadAll(b)
+	d, _ := vorbis.Decode(audioContext, audio.BytesReadSeekCloser(bs))
 	player, _ := audio.NewPlayer(audioContext, d)
 	audioPlayer[name] = player
 }
