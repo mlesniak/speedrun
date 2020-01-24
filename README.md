@@ -42,7 +42,7 @@ and start the executable `speedrun`.
 
 Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for the cool music!
 
-## TODOs
+## TODOs and IDEAs
 
 - [ ] Extend this README
 - [ ] Cleanup code
@@ -50,7 +50,8 @@ Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for th
 - [ ] Better gamepad support
 - [ ] Menus, Splashscreen
 - [ ] Ability to enter level codes
-- [ ] Release downloadable packages 
+- [ ] Release downloadable packages
+- [ ] [Tiled](https://www.mapeditor.org/) support? 
 
 Based on [/u/jerf's](https://www.reddit.com/user/jerf/) [comment](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffcj3s1?utm_source=share&utm_medium=web2x)
 
