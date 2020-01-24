@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/golang/freetype/truetype"
+	"github.com/markbates/pkger"
 	"golang.org/x/image/font"
 	"io/ioutil"
 )
@@ -11,12 +12,17 @@ var arcadeFontBig font.Face
 var arcadeFontLarge font.Face
 
 func init() {
-	pix, err := ioutil.ReadFile("assets/arcadepix.ttf")
+	pix, err := pkger.Open("/assets/arcadepix.ttf")
+	defer pix.Close()
+	if err != nil {
+		panic(err)
+	}
+	bs, err := ioutil.ReadAll(pix)
 	if err != nil {
 		panic(err)
 	}
 
-	tt, err := truetype.Parse(pix)
+	tt, err := truetype.Parse(bs)
 	if err != nil {
 		panic(err)
 	}
