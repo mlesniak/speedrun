@@ -1,5 +1,8 @@
 package main
 
+//go:generate go get github.com/markbates/pkger/cmd/pkger
+//go:generate pkger -include /assets
+
 import (
 	"fmt"
 	"github.com/SolarLune/resolv/resolv"

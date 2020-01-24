@@ -4,6 +4,18 @@ A speedrun game. The goal is to reach the white box as fast as possible.
 
 [![](youtube.png)](http://www.youtube.com/watch?v=C1_BILCPtJ0 "Speedrun 0.1")
 
+## Build instructions
+
+Since I'm not sure I want to commit all binary resources twice, `go get` won't be possible in 
+the near future. To build it yourself, execute
+
+    git clone https://github.com/mlesniak/speedrun.git
+    cd speedrun
+    go generate
+    go build
+    
+and start the executable `speedrun`.    
+
 ## Controls
 
 - Keyboard left, right and up for movement. `N` for a new level, `R` to restart the current one, `F` to toggle fullscreen.
