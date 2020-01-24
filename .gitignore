@@ -1,3 +1,5 @@
 .idea/
 speedrun
 
+# For now until more thoughts went into it:
+pkged.go
