@@ -62,7 +62,7 @@ func computeSeed(words string) int64 {
 }
 
 func randomWords(number int) []string {
-	file, err := ioutil.ReadFile("words")
+	file, err := ioutil.ReadFile("assets/words")
 	if err != nil {
 		panic(err)
 	}
