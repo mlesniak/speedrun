@@ -7,12 +7,12 @@ import (
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"github.com/hajimehoshi/ebiten/text"
+	"github.com/mlesniak/speedrun/internal/seed"
 	"image/color"
 	"log"
 	"math"
 	"math/rand"
 	"os"
-	"github.com/mlesniak/speedrun/internal/seed"
 	"time"
 )
 

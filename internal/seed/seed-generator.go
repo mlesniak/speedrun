@@ -3,6 +3,7 @@ package seed
 import (
 	"crypto/sha256"
 	"fmt"
+	"github.com/markbates/pkger"
 	"io/ioutil"
 	"math"
 	"math/rand"
@@ -62,7 +63,11 @@ func computeSeed(words string) int64 {
 }
 
 func randomWords(number int) []string {
-	file, err := ioutil.ReadFile("assets/words")
+	f, err := pkger.Open("/assets/words")
+	if err != nil {
+		panic(err)
+	}
+	file, err := ioutil.ReadAll(f)
 	if err != nil {
 		panic(err)
 	}
