@@ -26,6 +26,7 @@ and start the executable `speedrun`.
 - [X] Add license
 - [X] [Allow `go get`](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffc9khm?utm_source=share&utm_medium=web2x); partially possible, see build instructions above for generating a asset-independent binary
 - [X] Pack assets into single binary
+- [X] [Make dots fade out with time not just dissapear.](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffc181e?utm_source=share&utm_medium=web2x)
 
 ## Release 0.1 (release name: 'F*ck it, Ship it')
 
@@ -44,7 +45,6 @@ Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for th
 ## TODOs
 
 - [ ] Extend this README
-- [ ] [Make dots fade out with time not just dissapear.](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffc181e?utm_source=share&utm_medium=web2x)
 - [ ] Cleanup code
 - [ ] Restructure files
 - [ ] Better gamepad support

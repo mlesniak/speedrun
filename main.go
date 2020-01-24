@@ -89,6 +89,9 @@ func newGame() {
 	bestTime = math.MaxFloat64
 	playBackgroundTimes("background", math.MaxInt32)
 	initGame()
+
+	// For local development.
+	hud = false
 }
 
 func initGame() {
@@ -142,19 +145,23 @@ func initGame() {
 
 var frameCounter = 0
 
+var pause = false
+
 func update(screen *ebiten.Image) error {
-	if frameCounter == 0 {
+	checkExitKey()
+	if showDebug && inpututil.IsKeyJustPressed(ebiten.KeyP) {
+		pause = !pause
 	}
+	if !pause {
+		frameCounter++
+		checkExitKey()
+		checkDebugKey()
+		checkFullscreenKey()
+		checkGameControlKeys()
 
-	frameCounter++
-	checkExitKey()
-	checkExitKey()
-	checkDebugKey()
-	checkFullscreenKey()
-	checkGameControlKeys()
-
-	if !hud {
-		updateState()
+		if !hud {
+			updateState()
+		}
 	}
 
 	if ebiten.IsDrawingSkipped() {
@@ -354,8 +361,10 @@ func checkFullscreenKey() {
 	}
 }
 
+var backgroundColor = color.Gray{Y: 100}
+
 func drawBackground(screen *ebiten.Image) {
-	screen.Fill(color.Gray{Y: 100})
+	screen.Fill(backgroundColor)
 }
 
 func drawPlayer(screen *ebiten.Image, object Object) {
@@ -363,17 +372,19 @@ func drawPlayer(screen *ebiten.Image, object Object) {
 
 	// Trail
 	if len(object.PreviousPosition) > 0 {
-		for _, vec := range object.PreviousPosition {
+		colorQuotient := float64(backgroundColor.Y) / float64(len(object.PreviousPosition))
+		for i, vec := range object.PreviousPosition {
+			boxColor := uint8(float64(backgroundColor.Y) + colorQuotient*float64(i))
+			fmt.Println(boxColor)
 			drawRect(screen,
 				vec.X+float64(object.Body.W)/2-float64(object.Body.W)/8,
 				vec.Y+float64(object.Body.H)/2-float64(object.Body.H)/8,
 				float64(object.Body.W)/4,
 				float64(object.Body.H)/4,
-				color.Gray{Y: object.gray * 5})
+				color.Gray{Y: boxColor})
 		}
 	}
 
-	//col := color.Gray{Y: object.gray}
 	col := color.RGBA{255, 255, 0, 255}
 	ebitenutil.DrawRect(screen, x, float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H), col)
 }
