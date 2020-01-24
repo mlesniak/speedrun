@@ -25,6 +25,11 @@ Features and remarks
 
 Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for the cool music!
 
+## Next release (unreleased; collecting changes)
+
+- Add license
+- Allow `go get`
+
 ## TODOs
 
 - [ ] Extend this README

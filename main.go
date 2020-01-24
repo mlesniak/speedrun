@@ -12,7 +12,7 @@ import (
 	"math"
 	"math/rand"
 	"os"
-	"speedrun/seed"
+	"github.com/mlesniak/speedrun/internal/seed"
 	"time"
 )
 
