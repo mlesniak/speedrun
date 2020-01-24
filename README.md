@@ -39,20 +39,19 @@ Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for th
 
 ## Next release (unreleased; collecting changes)
 
-- Add license
-- Allow `go get`
+- [X] Add license
+- [X] [Allow `go get`](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffc9khm?utm_source=share&utm_medium=web2x); partially possible, see build instructions above for generating a asset-independent binary
+- [X] Pack assets into single binary
 
 ## TODOs
 
 - [ ] Extend this README
-- [ ] [Allow `go get`](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffc9khm?utm_source=share&utm_medium=web2x)
 - [ ] [Make dots fade out with time not just dissapear.](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffc181e?utm_source=share&utm_medium=web2x)
 - [ ] Cleanup code
 - [ ] Restructure files
 - [ ] Better gamepad support
 - [ ] Menus, Splashscreen
 - [ ] Ability to enter level codes
-- [ ] Pack into single binary
 - [ ] Release downloadable packages 
 
 Based on [/u/jerf's](https://www.reddit.com/user/jerf/) [comment](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffcj3s1?utm_source=share&utm_medium=web2x)
