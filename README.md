@@ -30,6 +30,8 @@ and start the executable `speedrun`.
 
 ## Release 0.1 (release name: 'F*ck it, Ship it')
 
+[Discussion on reddit](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/)
+
 - [X] The core is **currently a mess**, but hey, it's released ¯\\_(ツ)_/¯
 - [X] Game runs :-)
 - [X] Self-implemented arcade physics
