@@ -6,7 +6,6 @@ import (
 	"github.com/markbates/pkger"
 	"io/ioutil"
 	"log"
-	"time"
 )
 
 var audioPlayer map[string]*audio.Player
@@ -68,8 +67,9 @@ func PlayAudioTimes(name string, times int) {
 		for i := 0; i < times; i++ {
 			player.Play()
 			for player.IsPlaying() {
-				time.Sleep(time.Millisecond * 10)
+				//time.Sleep(time.Millisecond * 10)
 			}
+			player.Rewind()
 		}
 	}()
 }
