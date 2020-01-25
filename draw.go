@@ -120,3 +120,21 @@ func drawHUD(screen *ebiten.Image) {
 	text.Draw(screen, secs, arcadeFontLarge, width/2-len(secs)*50/2, height/2, color.Gray{Y: 200})
 	text.Draw(screen, randomSeed.Code, arcadeFont, (width-len(randomSeed.Code)*10)/2, height/2+50, color.Gray{Y: 180})
 }
+
+func draw(screen *ebiten.Image) {
+	drawBackground(screen)
+
+	if !hud {
+		drawGoal(screen, goal)
+		drawPlayer(screen, player)
+		drawBlocks(screen)
+		drawBorders(screen)
+		drawLevelCode(screen)
+		drawTimer(screen)
+	} else {
+		drawHUD(screen)
+	}
+
+	debugInfo(screen)
+	debugDrawPosition(screen)
+}

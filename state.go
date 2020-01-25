@@ -4,6 +4,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"math"
+	"os"
 	"time"
 )
 
@@ -97,6 +98,49 @@ func updateState() {
 			playBackgroundTimes("goal", 2)
 		} else {
 			playBackground("goal")
+		}
+	}
+}
+
+func checkGameControlKeys() {
+	if inpututil.IsKeyJustReleased(ebiten.KeyR) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton7) {
+		initGame()
+	}
+
+	if inpututil.IsKeyJustReleased(ebiten.KeyN) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton6) {
+		hud = true
+		newGame()
+	}
+}
+
+func checkExitKey() {
+	if ebiten.IsKeyPressed(ebiten.KeyEscape) || ebiten.IsKeyPressed(ebiten.KeyQ) {
+		os.Exit(0)
+	}
+}
+
+func checkFullscreenKey() {
+	if inpututil.IsKeyJustReleased(ebiten.KeyF) {
+		fs := ebiten.IsFullscreen()
+		ebiten.SetFullscreen(!fs)
+		ebiten.SetCursorVisible(!fs)
+	}
+}
+
+func state() {
+	checkExitKey()
+	if showDebug && inpututil.IsKeyJustPressed(ebiten.KeyP) {
+		pause = !pause
+	}
+	if !pause {
+		frameCounter++
+		checkExitKey()
+		checkDebugKey()
+		checkFullscreenKey()
+		checkGameControlKeys()
+
+		if !hud {
+			updateState()
 		}
 	}
 }
