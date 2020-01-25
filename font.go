@@ -5,44 +5,51 @@ import (
 	"github.com/markbates/pkger"
 	"golang.org/x/image/font"
 	"io/ioutil"
+	"log"
 )
 
-var arcadeFont font.Face
-var arcadeFontBig font.Face
-var arcadeFontLarge font.Face
+var fontCache = make(map[float64]font.Face)
+
+var arcadeTruetypeFont *truetype.Font
 
 func init() {
+	// Read font.
 	pix, err := pkger.Open("/assets/arcadepix.ttf")
 	defer pix.Close()
-	if err != nil {
-		panic(err)
-	}
+	mustFont(err)
 	bs, err := ioutil.ReadAll(pix)
-	if err != nil {
-		panic(err)
+	mustFont(err)
+
+	// Parse font data into fontFace.
+	arcadeTruetypeFont, err = truetype.Parse(bs)
+	mustFont(err)
+}
+
+// Font returns the arcade font for the given size. If it is not yet generated, it will be loaded and created.
+func Font(size float64) font.Face {
+	if f, ok := fontCache[size]; ok {
+		return f
 	}
 
-	tt, err := truetype.Parse(bs)
-	if err != nil {
-		panic(err)
-	}
+	loadedFont := createFont(size)
+	fontCache[size] = loadedFont
+	return loadedFont
+}
 
+// createFont creates the actual font face for the given size.
+func createFont(size float64) font.Face {
 	const dpi = 72
-	arcadeFont = truetype.NewFace(tt, &truetype.Options{
-		Size:    20,
+	loadedFont := truetype.NewFace(arcadeTruetypeFont, &truetype.Options{
+		Size:    size,
 		DPI:     dpi,
 		Hinting: font.HintingFull,
 	})
+	return loadedFont
+}
 
-	arcadeFontBig = truetype.NewFace(tt, &truetype.Options{
-		Size:    40,
-		DPI:     dpi,
-		Hinting: font.HintingFull,
-	})
-
-	arcadeFontLarge = truetype.NewFace(tt, &truetype.Options{
-		Size:    160,
-		DPI:     dpi,
-		Hinting: font.HintingFull,
-	})
+// mustAudio checks if an error occured while loading a file.
+func mustFont(err error) {
+	if err != nil {
+		log.Fatal("Unable to load font:", err)
+	}
 }

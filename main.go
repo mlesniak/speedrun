@@ -11,6 +11,8 @@ import (
 )
 
 func main() {
+	// TODO Regression: Audio not played twice.
+
 	initializeNewGame()
 	if err := ebiten.Run(update, width, height, 1.0, title); err != nil {
 		log.Fatal("Unable to start game: ", err)

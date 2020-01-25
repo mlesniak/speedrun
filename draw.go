@@ -73,17 +73,17 @@ func drawTimer(screen *ebiten.Image) {
 		passedTime = time.Now().Sub(startTime).Seconds()
 	}
 	secs := fmt.Sprintf("%.3f", passedTime)
-	text.Draw(screen, secs, arcadeFontBig, width-len(secs)*30, 45, color.Gray{Y: 200})
+	text.Draw(screen, secs, Font(40), width-len(secs)*30, 45, color.Gray{Y: 200})
 
 	if bestTime != math.MaxFloat64 {
 		best := fmt.Sprintf("HIGH %.3f ", bestTime)
-		text.Draw(screen, best, arcadeFont, width-len(best)*15, 80, color.Gray{Y: 150})
+		text.Draw(screen, best, Font(20), width-len(best)*15, 80, color.Gray{Y: 150})
 	}
 }
 
 func drawLevelCode(screen *ebiten.Image) {
 	// Currently hard-coded, although we could use the font to retrieve the actual width and align correctly.
-	text.Draw(screen, randomSeed.Code, arcadeFont, 10, 30, color.Gray{Y: 150})
+	text.Draw(screen, randomSeed.Code, Font(20), 10, 30, color.Gray{Y: 150})
 }
 
 func drawGoal(screen *ebiten.Image, object Object) {
@@ -116,8 +116,8 @@ func drawHUD(screen *ebiten.Image) {
 	}
 	passedTime = passedTime / step
 	secs := fmt.Sprintf("%d", int(passedTime))
-	text.Draw(screen, secs, arcadeFontLarge, width/2-len(secs)*50/2, height/2, color.Gray{Y: 200})
-	text.Draw(screen, randomSeed.Code, arcadeFont, (width-len(randomSeed.Code)*10)/2, height/2+50, color.Gray{Y: 180})
+	text.Draw(screen, secs, Font(160), width/2-len(secs)*50/2, height/2, color.Gray{Y: 200})
+	text.Draw(screen, randomSeed.Code, Font(20), (width-len(randomSeed.Code)*10)/2, height/2+50, color.Gray{Y: 180})
 }
 
 func draw(screen *ebiten.Image) {
