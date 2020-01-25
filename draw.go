@@ -10,12 +10,6 @@ import (
 	"time"
 )
 
-var backgroundColor = color.Gray{Y: 100}
-
-func drawBackground(screen *ebiten.Image) {
-	screen.Fill(backgroundColor)
-}
-
 // Translate all coordinates in player's X coordinate to create a fake viewport.
 func drawRect(dst *ebiten.Image, x, y, w, height float64, clr color.Color) {
 	translatedX := x - float64(player.Body.X) + getXTranslation()
@@ -88,8 +82,6 @@ func drawHUD(screen *ebiten.Image) {
 }
 
 func drawState(screen *ebiten.Image) {
-	drawBackground(screen)
-
 	if hud {
 		drawHUD(screen)
 	} else {

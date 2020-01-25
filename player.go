@@ -110,15 +110,26 @@ func drawPlayer(screen *ebiten.Image, object Object) {
 
 	// Trail
 	if len(object.PreviousPosition) > 0 {
-		colorQuotient := float64(backgroundColor.Y) / float64(len(object.PreviousPosition))
+		r, g, b, _ := color.RGBA{
+			R: 255,
+			G: 255,
+			B: 255,
+			A: 255,
+		}.RGBA()
+		colorQuotient := 255.0 / float64(len(object.PreviousPosition))
 		for i, vec := range object.PreviousPosition {
-			boxColor := uint8(float64(backgroundColor.Y) + colorQuotient*float64(i))
+			boxColor := uint8(colorQuotient * float64(i))
 			drawRect(screen,
 				vec.X+float64(object.Body.W)/2-float64(object.Body.W)/8,
 				vec.Y+float64(object.Body.H)/2-float64(object.Body.H)/8,
 				float64(object.Body.W)/4,
 				float64(object.Body.H)/4,
-				color.Gray{Y: boxColor})
+				color.RGBA{
+					R: uint8(r),
+					G: uint8(g),
+					B: uint8(b),
+					A: boxColor,
+				})
 		}
 	}
 

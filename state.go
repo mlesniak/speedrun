@@ -1,3 +1,4 @@
+// TODO Remove this class after everything is in world state?
 package main
 
 import (

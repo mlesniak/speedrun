@@ -19,12 +19,16 @@ func main() {
 
 // update is the main game loop, updating the current game updateState and (optionally) drawing it.
 func update(screen *ebiten.Image) error {
+	background.Update()
+	// Legacy objects.
 	updateState()
 
 	if ebiten.IsDrawingSkipped() {
 		return nil
 	}
 
+	background.Draw(screen)
+	// Legacy objects.
 	drawState(screen)
 	return nil
 }
