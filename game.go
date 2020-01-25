@@ -9,6 +9,23 @@ import (
 	"time"
 )
 
+var player Object
+var walls *resolv.Space
+var goals *resolv.Space
+var blocks = []Object{}
+var goal Object
+
+var randomSeed seed.Seed
+
+var startTime time.Time
+var finalTime = 0.0
+var bestTime = math.MaxFloat64
+var borderWidth int32 = 5
+
+// Add scenes instead of a single boolean variable.
+var hud = true
+var countDown time.Time
+
 func newGame() {
 	randomSeed = seed.New()
 	if len(os.Args) > 1 {

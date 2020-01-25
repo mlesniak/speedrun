@@ -8,6 +8,12 @@ import (
 	"time"
 )
 
+const gravity = 100
+
+var frameCounter = 0
+
+var pause = false
+
 func updateState() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton0) {
 		player.jumped++
