@@ -105,7 +105,6 @@ func drawBorders(screen *ebiten.Image) {
 	ebitenutil.DrawRect(screen, 0, float64(height-borderWidth), width*widthFactor, float64(height-borderWidth), color.Gray{Y: 40})
 }
 
-// TODO move to audio.go
 func drawHUD(screen *ebiten.Image) {
 	step := int64(750)
 	duration := int64(step * 4)
