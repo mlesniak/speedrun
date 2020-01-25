@@ -15,18 +15,18 @@ var debugFunctions = []debugFunc{}
 var showDebug = false
 
 func init() {
-	addDebugMessage(func() string {
+	AddDebugMessage(func() string {
 		return fmt.Sprintf("Levelcode %s", randomSeed.Code)
 	})
-	addDebugMessage(func() string {
+	AddDebugMessage(func() string {
 		return fmt.Sprintf("X=%.2v", player.Body.X)
 	})
-	addDebugMessage(func() string {
+	AddDebugMessage(func() string {
 		return fmt.Sprintf("Translation=%.2f", -float64(player.Body.X)-width/2)
 	})
 }
 
-func addDebugMessage(f debugFunc) {
+func AddDebugMessage(f debugFunc) {
 	debugFunctions = append(debugFunctions, f)
 }
 
@@ -36,13 +36,13 @@ func checkDebugKey() {
 	}
 }
 
-func debugInfo(screen *ebiten.Image) {
+func drawDebugInfo(screen *ebiten.Image) {
 	if !showDebug {
 		return
 	}
 
 	rowHeight := 14
-	y := 50
+	y := 50 // Draw under level code display.
 	for _, function := range debugFunctions {
 		msg := function()
 		ebitenutil.DebugPrintAt(screen, msg, 10, y)

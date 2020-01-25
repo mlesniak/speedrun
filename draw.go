@@ -134,6 +134,6 @@ func draw(screen *ebiten.Image) {
 		drawHUD(screen)
 	}
 
-	debugInfo(screen)
+	drawDebugInfo(screen)
 	debugDrawPosition(screen)
 }
