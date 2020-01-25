@@ -375,7 +375,6 @@ func drawPlayer(screen *ebiten.Image, object Object) {
 		colorQuotient := float64(backgroundColor.Y) / float64(len(object.PreviousPosition))
 		for i, vec := range object.PreviousPosition {
 			boxColor := uint8(float64(backgroundColor.Y) + colorQuotient*float64(i))
-			fmt.Println(boxColor)
 			drawRect(screen,
 				vec.X+float64(object.Body.W)/2-float64(object.Body.W)/8,
 				vec.Y+float64(object.Body.H)/2-float64(object.Body.H)/8,
