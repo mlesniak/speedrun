@@ -110,12 +110,12 @@ func updateState() {
 
 func checkGameControlKeys() {
 	if inpututil.IsKeyJustReleased(ebiten.KeyR) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton7) {
-		initGame()
+		resetCurrentGame()
 	}
 
 	if inpututil.IsKeyJustReleased(ebiten.KeyN) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton6) {
 		hud = true
-		newGame()
+		initializeNewGame()
 	}
 }
 

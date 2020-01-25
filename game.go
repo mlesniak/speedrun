@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/SolarLune/resolv/resolv"
+	"github.com/hajimehoshi/ebiten"
 	"github.com/mlesniak/speedrun/internal/seed"
 	"math"
 	"math/rand"
@@ -26,7 +27,12 @@ var borderWidth int32 = 5
 var hud = true
 var countDown time.Time
 
-func newGame() {
+func initializeNewGame() {
+	if fullscreen {
+		ebiten.SetFullscreen(true)
+		ebiten.SetCursorVisible(false)
+	}
+
 	randomSeed = seed.New()
 	if len(os.Args) > 1 {
 		randomSeed = seed.NewPreset(os.Args[1])
@@ -34,13 +40,13 @@ func newGame() {
 
 	bestTime = math.MaxFloat64
 	playBackgroundTimes("background", math.MaxInt32)
-	initGame()
+	resetCurrentGame()
 
 	// For local development.
 	hud = false
 }
 
-func initGame() {
+func resetCurrentGame() {
 	player = Object{
 		gray:         40,
 		Body:         resolv.NewRectangle(0, height-20-borderWidth, 20, 20),
