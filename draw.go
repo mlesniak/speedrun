@@ -16,43 +16,10 @@ func drawBackground(screen *ebiten.Image) {
 	screen.Fill(backgroundColor)
 }
 
-func drawPlayer(screen *ebiten.Image, object Object) {
-	x := getXTranslation()
-
-	// Trail
-	if len(object.PreviousPosition) > 0 {
-		colorQuotient := float64(backgroundColor.Y) / float64(len(object.PreviousPosition))
-		for i, vec := range object.PreviousPosition {
-			boxColor := uint8(float64(backgroundColor.Y) + colorQuotient*float64(i))
-			drawRect(screen,
-				vec.X+float64(object.Body.W)/2-float64(object.Body.W)/8,
-				vec.Y+float64(object.Body.H)/2-float64(object.Body.H)/8,
-				float64(object.Body.W)/4,
-				float64(object.Body.H)/4,
-				color.Gray{Y: boxColor})
-		}
-	}
-
-	col := color.RGBA{255, 255, 0, 255}
-	ebitenutil.DrawRect(screen, x, float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H), col)
-}
-
 // Translate all coordinates in player's X coordinate to create a fake viewport.
 func drawRect(dst *ebiten.Image, x, y, w, height float64, clr color.Color) {
 	translatedX := x - float64(player.Body.X) + getXTranslation()
 	ebitenutil.DrawRect(dst, translatedX, y, w, height, clr)
-}
-
-func debugDrawPosition(screen *ebiten.Image) {
-	if !showDebug {
-		return
-	}
-
-	px, py := ebiten.CursorPosition()
-	crossColor := color.RGBA{80, 80, 80, 255}
-	ebitenutil.DrawLine(screen, float64(px), 0, float64(px), float64(height), crossColor)
-	ebitenutil.DrawLine(screen, 0, float64(py), float64(width), float64(py), crossColor)
-	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("%v/%v", px, py), px+5, py+10)
 }
 
 func getXTranslation() float64 {
@@ -120,20 +87,19 @@ func drawHUD(screen *ebiten.Image) {
 	text.Draw(screen, randomSeed.Code, Font(20), (width-len(randomSeed.Code)*10)/2, height/2+50, color.Gray{Y: 180})
 }
 
-func draw(screen *ebiten.Image) {
+func drawState(screen *ebiten.Image) {
 	drawBackground(screen)
 
-	if !hud {
+	if hud {
+		drawHUD(screen)
+	} else {
 		drawGoal(screen, goal)
 		drawPlayer(screen, player)
 		drawBlocks(screen)
 		drawBorders(screen)
 		drawLevelCode(screen)
 		drawTimer(screen)
-	} else {
-		drawHUD(screen)
 	}
 
 	drawDebugInfo(screen)
-	debugDrawPosition(screen)
 }

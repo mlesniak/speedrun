@@ -5,6 +5,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
+	"image/color"
 )
 
 type debugFunc func() string
@@ -30,7 +31,7 @@ func AddDebugMessage(f debugFunc) {
 	debugFunctions = append(debugFunctions, f)
 }
 
-func checkDebugKey() {
+func CheckDebugKey() {
 	if inpututil.IsKeyJustReleased(ebiten.KeyD) {
 		showDebug = !showDebug
 	}
@@ -41,6 +42,7 @@ func drawDebugInfo(screen *ebiten.Image) {
 		return
 	}
 
+	// Show text
 	rowHeight := 14
 	y := 50 // Draw under level code display.
 	for _, function := range debugFunctions {
@@ -48,4 +50,11 @@ func drawDebugInfo(screen *ebiten.Image) {
 		ebitenutil.DebugPrintAt(screen, msg, 10, y)
 		y += rowHeight
 	}
+
+	// Show cursor position.
+	px, py := ebiten.CursorPosition()
+	crossColor := color.RGBA{80, 80, 80, 255}
+	ebitenutil.DrawLine(screen, float64(px), 0, float64(px), float64(height), crossColor)
+	ebitenutil.DrawLine(screen, 0, float64(py), float64(width), float64(py), crossColor)
+	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("%v/%v", px, py), px+5, py+10)
 }

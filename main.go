@@ -17,14 +17,14 @@ func main() {
 	}
 }
 
-// update is the main game loop, updating the current game state and (optionally) drawing it.
+// update is the main game loop, updating the current game updateState and (optionally) drawing it.
 func update(screen *ebiten.Image) error {
-	state()
+	updateState()
 
 	if ebiten.IsDrawingSkipped() {
 		return nil
 	}
 
-	draw(screen)
+	drawState(screen)
 	return nil
 }
