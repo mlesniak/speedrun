@@ -101,9 +101,9 @@ func updateState() {
 		finalTime = time.Now().Sub(startTime).Seconds()
 		if finalTime < bestTime {
 			bestTime = finalTime
-			playBackgroundTimes("goal", 2)
+			PlayAudioTimes("goal", 2)
 		} else {
-			playBackground("goal")
+			PlayAudio("goal")
 		}
 	}
 }

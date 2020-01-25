@@ -5,53 +5,71 @@ import (
 	"github.com/hajimehoshi/ebiten/audio/vorbis"
 	"github.com/markbates/pkger"
 	"io/ioutil"
+	"log"
+	"time"
 )
 
 var audioPlayer map[string]*audio.Player
-var context *audio.Context
 
 func init() {
 	audioPlayer = make(map[string]*audio.Player)
+	audioContext, _ := audio.NewContext(44100)
 
-	context, _ = audio.NewContext(44100)
-	loadAudio(context, "countdown")
-	loadAudio(context, "start")
-	loadAudio(context, "goal")
-	loadAudio(context, "highscore")
-	loadAudio(context, "background")
+	loadAudioAsset(audioContext, "countdown")
+	loadAudioAsset(audioContext, "start")
+	loadAudioAsset(audioContext, "goal")
+	loadAudioAsset(audioContext, "highscore")
+	loadAudioAsset(audioContext, "background")
 }
 
-func loadAudio(audioContext *audio.Context, name string) {
+// loadAudioAsset loads an ogg audio file with the fiven name from assets.
+func loadAudioAsset(audioContext *audio.Context, name string) {
+	// Load file.
 	b, err := pkger.Open("/assets/" + name + ".ogg")
-
-	if err != nil {
-		panic(err)
-	}
+	mustAudio(err)
 	defer b.Close()
-	bs, _ := ioutil.ReadAll(b)
-	d, _ := vorbis.Decode(audioContext, audio.BytesReadSeekCloser(bs))
-	player, _ := audio.NewPlayer(audioContext, d)
+	bs, err := ioutil.ReadAll(b)
+	mustAudio(err)
+
+	// Decode file.
+	d, err := vorbis.Decode(audioContext, audio.BytesReadSeekCloser(bs))
+	mustAudio(err)
+
+	// Create player for future use.
+	player, err := audio.NewPlayer(audioContext, d)
+	mustAudio(err)
 	audioPlayer[name] = player
 }
 
-func playBackground(name string) {
-	playBackgroundTimes(name, 1)
+// mustAudio checks if an error occured while loading a file.
+func mustAudio(err error) {
+	if err != nil {
+		log.Fatal("Unable to load audio file:", err)
+	}
 }
 
-func playBackgroundTimes(name string, times int) {
+// PlayAudio plays an audio file once.
+func PlayAudio(name string) {
+	PlayAudioTimes(name, 1)
+}
+
+// PlayAudioTimes plays an audio file multiple times.
+func PlayAudioTimes(name string, times int) {
 	player := audioPlayer[name]
+	// If the audio is currently playing, rewind, i.e. do not play multiple streams.
 	if player.IsPlaying() {
 		player.Rewind()
 	}
 
 	go func() {
+		// Reset after finish.
 		defer player.Rewind()
+
 		for i := 0; i < times; i++ {
 			player.Play()
 			for player.IsPlaying() {
-				// Wait...
+				time.Sleep(time.Millisecond * 10)
 			}
-			player.Rewind()
 		}
 	}()
 }

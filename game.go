@@ -39,7 +39,7 @@ func initializeNewGame() {
 	}
 
 	bestTime = math.MaxFloat64
-	playBackgroundTimes("background", math.MaxInt32)
+	PlayAudioTimes("background", math.MaxInt32)
 	resetCurrentGame()
 
 	// For local development.
