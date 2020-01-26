@@ -47,19 +47,6 @@ func drawLevelCode(screen *ebiten.Image) {
 	text.Draw(screen, randomSeed.Code, Font(20), 10, 30, color.Gray{Y: 150})
 }
 
-func drawBlocks(screen *ebiten.Image) {
-	for _, object := range blocks {
-		drawRect(screen,
-			float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
-			color.Gray{Y: object.Gray})
-	}
-}
-
-func drawBorders(screen *ebiten.Image) {
-	ebitenutil.DrawRect(screen, 0, 0, width*widthFactor, float64(borderWidth), color.Gray{Y: 40})
-	ebitenutil.DrawRect(screen, 0, float64(height-borderWidth), width*widthFactor, float64(height-borderWidth), color.Gray{Y: 40})
-}
-
 func drawHUD(screen *ebiten.Image) {
 	step := int64(750)
 	duration := int64(step * 4)
@@ -81,8 +68,8 @@ func drawState(screen *ebiten.Image) {
 	} else {
 		goal.Draw(screen)
 		player.Draw(screen)
-		drawBlocks(screen)
-		drawBorders(screen)
+		obstacles.Draw(screen)
+
 		drawLevelCode(screen)
 		drawTimer(screen)
 	}

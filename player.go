@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/SolarLune/resolv/resolv"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
@@ -20,6 +21,18 @@ type Player struct {
 }
 
 const gravity = 100
+
+func initPlayer() {
+	player = Player{
+		Object: Object{
+			Body:         resolv.NewRectangle(0, height-20-borderWidth, 20, 20),
+			Velocity:     Vector2{},
+			Acceleration: Vector2{X: 10.0, Y: 10.0},
+		},
+		jumped:           0,
+		PreviousPosition: nil,
+	}
+}
 
 func (player *Player) Update() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton0) {
