@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-var player Object
+var player Player
 var walls *resolv.Space
 var goals *resolv.Space
 var blocks = []Object{}
@@ -47,11 +47,14 @@ func initializeNewGame() {
 }
 
 func resetCurrentGame() {
-	player = Object{
-		gray:         40,
-		Body:         resolv.NewRectangle(0, height-20-borderWidth, 20, 20),
-		Velocity:     Vector2{},
-		Acceleration: Vector2{X: 10.0, Y: 10.0},
+	player = Player{
+		Object: Object{
+			Body:         resolv.NewRectangle(0, height-20-borderWidth, 20, 20),
+			Velocity:     Vector2{},
+			Acceleration: Vector2{X: 10.0, Y: 10.0},
+		},
+		jumped:           0,
+		PreviousPosition: nil,
 	}
 
 	// Add floor and ceiling to global space.
@@ -68,7 +71,7 @@ func resetCurrentGame() {
 	blocks = []Object{}
 	for i := 0; i < numBlocks; i++ {
 		blocks = append(blocks, Object{
-			gray: uint8(10 + rand.Intn(50)),
+			Gray: uint8(10 + rand.Intn(50)),
 			Body: resolv.NewRectangle(rand.Int31n(width*widthFactor)/40*40, rand.Int31n(height)/40*40, 40, 40),
 			// TODO Check that body does not collide with player.
 		})
@@ -82,7 +85,7 @@ func resetCurrentGame() {
 	x := rand.Intn(width/2) + ((width-1)*widthFactor - width/2)
 	y := rand.Intn(height)
 	goal = Object{
-		gray: 255,
+		Gray: 255,
 		Body: resolv.NewRectangle(int32(x), int32(y), player.Body.W, player.Body.H),
 	}
 	goals.Add(goal.Body)

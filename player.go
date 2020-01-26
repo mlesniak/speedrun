@@ -9,6 +9,16 @@ import (
 	"time"
 )
 
+type Player struct {
+	Object
+
+	// Number of times jumped
+	jumped int
+
+	// Last N positions; we could remember the timestamp, too for more independence of the frameCounter counter.
+	PreviousPosition []Vector2
+}
+
 const gravity = 100
 
 func updatePlayerState() {
@@ -105,25 +115,25 @@ func updatePlayerState() {
 	}
 }
 
-func drawPlayer(screen *ebiten.Image, object Object) {
+func drawPlayer(screen *ebiten.Image, player Player) {
 	x := getXTranslation()
 
 	// Trail
-	if len(object.PreviousPosition) > 0 {
+	if len(player.PreviousPosition) > 0 {
 		r, g, b, _ := color.RGBA{
 			R: 255,
 			G: 255,
 			B: 255,
 			A: 255,
 		}.RGBA()
-		colorQuotient := 255.0 / float64(len(object.PreviousPosition))
-		for i, vec := range object.PreviousPosition {
+		colorQuotient := 255.0 / float64(len(player.PreviousPosition))
+		for i, vec := range player.PreviousPosition {
 			boxColor := uint8(colorQuotient * float64(i))
 			drawRect(screen,
-				vec.X+float64(object.Body.W)/2-float64(object.Body.W)/8,
-				vec.Y+float64(object.Body.H)/2-float64(object.Body.H)/8,
-				float64(object.Body.W)/4,
-				float64(object.Body.H)/4,
+				vec.X+float64(player.Body.W)/2-float64(player.Body.W)/8,
+				vec.Y+float64(player.Body.H)/2-float64(player.Body.H)/8,
+				float64(player.Body.W)/4,
+				float64(player.Body.H)/4,
 				color.RGBA{
 					R: uint8(r),
 					G: uint8(g),
@@ -134,5 +144,5 @@ func drawPlayer(screen *ebiten.Image, object Object) {
 	}
 
 	col := color.RGBA{255, 255, 0, 255}
-	ebitenutil.DrawRect(screen, x, float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H), col)
+	ebitenutil.DrawRect(screen, x, float64(player.Body.Y), float64(player.Body.W), float64(player.Body.H), col)
 }

@@ -1,3 +1,4 @@
+// TODO Rename to Object?
 package main
 
 import (
@@ -19,14 +20,7 @@ type Object struct {
 	Acceleration Vector2
 
 	// Rename this to a color, later a texture.
-	gray uint8
-
-	// TODO Move these fields to a dedicated player object.
-	// Number of times jumped
-	jumped int
-
-	// Last N positions; we could remember the timestamp, too for more independence of the frameCounter counter.
-	PreviousPosition []Vector2
+	Gray uint8
 }
 
 type Objecter interface {

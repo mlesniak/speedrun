@@ -50,14 +50,14 @@ func drawLevelCode(screen *ebiten.Image) {
 func drawGoal(screen *ebiten.Image, object Object) {
 	drawRect(screen,
 		float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
-		color.Gray{Y: object.gray})
+		color.Gray{Y: object.Gray})
 }
 
 func drawBlocks(screen *ebiten.Image) {
 	for _, object := range blocks {
 		drawRect(screen,
 			float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
-			color.Gray{Y: object.gray})
+			color.Gray{Y: object.Gray})
 	}
 }
 
