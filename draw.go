@@ -42,11 +42,6 @@ func drawTimer(screen *ebiten.Image) {
 	}
 }
 
-func drawLevelCode(screen *ebiten.Image) {
-	// Currently hard-coded, although we could use the font to retrieve the actual width and align correctly.
-	text.Draw(screen, randomSeed.Code, Font(20), 10, 30, color.Gray{Y: 150})
-}
-
 func drawHUD(screen *ebiten.Image) {
 	step := int64(750)
 	duration := int64(step * 4)
@@ -69,8 +64,8 @@ func drawState(screen *ebiten.Image) {
 		goal.Draw(screen)
 		player.Draw(screen)
 		obstacles.Draw(screen)
+		levelcode.Draw(screen)
 
-		drawLevelCode(screen)
 		drawTimer(screen)
 	}
 
