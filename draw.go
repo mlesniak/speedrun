@@ -86,7 +86,7 @@ func drawState(screen *ebiten.Image) {
 		drawHUD(screen)
 	} else {
 		drawGoal(screen, goal)
-		drawPlayer(screen, player)
+		player.Draw(screen)
 		drawBlocks(screen)
 		drawBorders(screen)
 		drawLevelCode(screen)

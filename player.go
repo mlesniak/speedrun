@@ -21,7 +21,7 @@ type Player struct {
 
 const gravity = 100
 
-func updatePlayerState() {
+func (player *Player) Update() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton0) {
 		player.jumped++
 		switch player.jumped {
@@ -115,7 +115,7 @@ func updatePlayerState() {
 	}
 }
 
-func drawPlayer(screen *ebiten.Image, player Player) {
+func (player *Player) Draw(screen *ebiten.Image) {
 	x := getXTranslation()
 
 	// Trail

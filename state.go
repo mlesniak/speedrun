@@ -54,6 +54,6 @@ func updateState() {
 
 	frameCounter++
 	if !hud {
-		updatePlayerState()
+		player.Update()
 	}
 }
