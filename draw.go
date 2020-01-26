@@ -6,7 +6,6 @@ import (
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/text"
 	"image/color"
-	"math"
 	"time"
 )
 
@@ -26,22 +25,6 @@ func getXTranslation() float64 {
 	return width / 2
 }
 
-func drawTimer(screen *ebiten.Image) {
-	var passedTime float64
-	if finalTime != 0.0 {
-		passedTime = finalTime
-	} else {
-		passedTime = time.Now().Sub(startTime).Seconds()
-	}
-	secs := fmt.Sprintf("%.3f", passedTime)
-	text.Draw(screen, secs, Font(40), width-len(secs)*30, 45, color.Gray{Y: 200})
-
-	if bestTime != math.MaxFloat64 {
-		best := fmt.Sprintf("HIGH %.3f ", bestTime)
-		text.Draw(screen, best, Font(20), width-len(best)*15, 80, color.Gray{Y: 150})
-	}
-}
-
 func drawHUD(screen *ebiten.Image) {
 	step := int64(750)
 	duration := int64(step * 4)
@@ -58,6 +41,7 @@ func drawHUD(screen *ebiten.Image) {
 }
 
 func drawState(screen *ebiten.Image) {
+	// TODO Add scenese.
 	if hud {
 		drawHUD(screen)
 	} else {
@@ -65,8 +49,7 @@ func drawState(screen *ebiten.Image) {
 		player.Draw(screen)
 		obstacles.Draw(screen)
 		levelcode.Draw(screen)
-
-		drawTimer(screen)
+		timer.Draw(screen)
 	}
 
 	drawDebugInfo(screen)
