@@ -12,9 +12,8 @@ import (
 
 var player Player
 var walls *resolv.Space
-var goals *resolv.Space
+
 var blocks = []Object{}
-var goal Object
 
 var randomSeed seed.Seed
 
@@ -80,15 +79,7 @@ func resetCurrentGame() {
 		walls.Add(block.Body)
 	}
 
-	// Add final goal in the last page of the view.
-	goals = resolv.NewSpace()
-	x := rand.Intn(width/2) + ((width-1)*widthFactor - width/2)
-	y := rand.Intn(height)
-	goal = Object{
-		Gray: 255,
-		Body: resolv.NewRectangle(int32(x), int32(y), player.Body.W, player.Body.H),
-	}
-	goals.Add(goal.Body)
+	initGoals()
 
 	// Start startTime
 	finalTime = 0.0

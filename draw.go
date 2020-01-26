@@ -47,12 +47,6 @@ func drawLevelCode(screen *ebiten.Image) {
 	text.Draw(screen, randomSeed.Code, Font(20), 10, 30, color.Gray{Y: 150})
 }
 
-func drawGoal(screen *ebiten.Image, object Object) {
-	drawRect(screen,
-		float64(object.Body.X), float64(object.Body.Y), float64(object.Body.W), float64(object.Body.H),
-		color.Gray{Y: object.Gray})
-}
-
 func drawBlocks(screen *ebiten.Image) {
 	for _, object := range blocks {
 		drawRect(screen,
@@ -85,7 +79,7 @@ func drawState(screen *ebiten.Image) {
 	if hud {
 		drawHUD(screen)
 	} else {
-		drawGoal(screen, goal)
+		goal.Draw(screen)
 		player.Draw(screen)
 		drawBlocks(screen)
 		drawBorders(screen)
