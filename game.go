@@ -19,7 +19,7 @@ var bestTime = math.MaxFloat64
 var borderWidth int32 = 5
 
 // Add scenes instead of a single boolean variable.
-var hud = true
+var showHud = true
 var countDown time.Time
 
 func startGame() {
@@ -38,7 +38,7 @@ func startGame() {
 	resetGame()
 
 	// For local development.
-	hud = false
+	showHud = false
 }
 
 func resetGame() {

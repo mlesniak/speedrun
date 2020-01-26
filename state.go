@@ -16,7 +16,7 @@ func CheckGameKeys() {
 	}
 
 	if inpututil.IsKeyJustReleased(ebiten.KeyN) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton6) {
-		hud = true // TODO Change scene...
+		showHud = true // TODO Change scene...
 		startGame()
 	}
 }
@@ -53,7 +53,7 @@ func updateState() {
 	}
 
 	frameCounter++
-	if !hud {
+	if !showHud {
 		player.Update()
 	}
 }
