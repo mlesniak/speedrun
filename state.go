@@ -12,12 +12,12 @@ var paused = false // True if the game is paused: state is not updated, but stil
 
 func CheckGameKeys() {
 	if inpututil.IsKeyJustReleased(ebiten.KeyR) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton7) {
-		resetCurrentGame()
+		resetGame()
 	}
 
 	if inpututil.IsKeyJustReleased(ebiten.KeyN) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton6) {
 		hud = true // TODO Change scene...
-		initializeNewGame()
+		startGame()
 	}
 }
 

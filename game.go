@@ -22,7 +22,7 @@ var borderWidth int32 = 5
 var hud = true
 var countDown time.Time
 
-func initializeNewGame() {
+func startGame() {
 	if fullscreen {
 		ebiten.SetFullscreen(true)
 		ebiten.SetCursorVisible(false)
@@ -35,13 +35,13 @@ func initializeNewGame() {
 
 	bestTime = math.MaxFloat64
 	PlayAudioTimes("background", math.MaxInt32)
-	resetCurrentGame()
+	resetGame()
 
 	// For local development.
 	hud = false
 }
 
-func resetCurrentGame() {
+func resetGame() {
 	rand.Seed(randomSeed.Seed)
 
 	initPlayer()
