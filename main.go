@@ -11,15 +11,18 @@ import (
 )
 
 func main() {
-	startGame()
-	if err := ebiten.Run(update, width, height, 1.0, title); err != nil {
+	initalizeGame()
+
+	// Start game loop.
+	if err := ebiten.Run(GameLoop, width, height, 1.0, title); err != nil {
 		log.Fatal("Unable to start game: ", err)
 	}
 }
 
-// update is the main game loop, updating the current game updateState and (optionally) drawing it.
-func update(screen *ebiten.Image) error {
+// GameLoop is the main game loop, updating the current game updateState and (optionally) drawing it.
+func GameLoop(screen *ebiten.Image) error {
 	background.Update()
+
 	// Legacy objects.
 	updateState()
 

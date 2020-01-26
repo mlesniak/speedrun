@@ -22,7 +22,7 @@ var borderWidth int32 = 5
 var showHud = true
 var countDown time.Time
 
-func startGame() {
+func initalizeGame() {
 	if fullscreen {
 		ebiten.SetFullscreen(true)
 		ebiten.SetCursorVisible(false)

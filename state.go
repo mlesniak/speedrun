@@ -17,7 +17,7 @@ func CheckGameKeys() {
 
 	if inpututil.IsKeyJustReleased(ebiten.KeyN) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton6) {
 		showHud = true // TODO Change scene...
-		startGame()
+		initalizeGame()
 	}
 }
 

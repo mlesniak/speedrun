@@ -34,5 +34,5 @@ func drawState(screen *ebiten.Image) {
 		timer.Draw(screen)
 	}
 
-	drawDebugInfo(screen)
+	debug.Draw(screen)
 }

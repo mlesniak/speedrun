@@ -15,6 +15,12 @@ var debugFunctions = []debugFunc{}
 // If true, debug information is displayed.
 var showDebug = false
 
+type Debug struct {
+	// Empty
+}
+
+var debug *Debug = new(Debug)
+
 func init() {
 	AddDebugMessage(func() string {
 		return fmt.Sprintf("Levelcode %s", randomSeed.Code)
@@ -37,7 +43,7 @@ func CheckDebugKey() {
 	}
 }
 
-func drawDebugInfo(screen *ebiten.Image) {
+func (*Debug) Draw(screen *ebiten.Image) {
 	if !showDebug {
 		return
 	}
