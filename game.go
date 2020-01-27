@@ -6,15 +6,11 @@ import (
 	"math"
 	"math/rand"
 	"os"
-	"time"
 )
 
 // State
 var player Player
 var randomSeed seed.Seed
-
-// Variables
-var startTime time.Time
 
 // Add scenes instead of a single boolean variable.
 var showHud = true
@@ -46,7 +42,7 @@ func resetGame() {
 	initObstacles()
 	initGoals()
 
+	// TODO Currently leading to a bug where timer already starts.
 	timer.Reset()
-
-	startTime = time.Now()
+	hud.Reset()
 }

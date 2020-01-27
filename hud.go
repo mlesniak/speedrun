@@ -9,28 +9,36 @@ import (
 )
 
 type Hud struct {
-	// Empty
+	startTime time.Time
 }
 
-var hud *Hud = new(Hud)
+var hud *Hud = NewHud()
+
+func NewHud() *Hud {
+	return &Hud{
+		startTime: time.Now(),
+	}
+}
 
 func (*Hud) Update() {
 	// Empty
 }
 
-func (*Hud) Draw(screen *ebiten.Image) {
-	// TODO Countdown should not use start time of the timer but should have a timer on its own.
-
+func (h *Hud) Draw(screen *ebiten.Image) {
 	step := int64(750)
 	duration := int64(step * 4)
-	passedTime := duration - time.Now().Sub(startTime).Milliseconds()
+	passedTime := duration - time.Now().Sub(h.startTime).Milliseconds()
 	if passedTime < step {
 		showHud = false
-		startTime = time.Now()
+		h.startTime = time.Now()
 		return
 	}
 	passedTime = passedTime / step
 	secs := fmt.Sprintf("%d", int(passedTime))
 	text.Draw(screen, secs, Font(160), width/2-len(secs)*50/2, height/2, color.Gray{Y: 200})
 	text.Draw(screen, randomSeed.Code, Font(20), (width-len(randomSeed.Code)*10)/2, height/2+50, color.Gray{Y: 180})
+}
+
+func (h *Hud) Reset() {
+	hud = NewHud()
 }
