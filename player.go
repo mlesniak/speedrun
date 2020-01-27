@@ -116,6 +116,7 @@ func (player *Player) Update() {
 	}
 
 	// Check if goal reached.
+	// TODO Check that we did not reach the goal already (as game state, i.e. later) to prevent sound on each collision.
 	if goals.IsColliding(player.Body) {
 		if timer.UpdateTime() {
 			PlayAudioTimes("goal", 2)
