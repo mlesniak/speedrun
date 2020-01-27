@@ -9,6 +9,15 @@ import (
 )
 
 // State
+type GameState struct {
+	player    *Player
+	obstacles *Obstacles
+	goal      *Goal
+	timer     *Timer
+}
+
+// TODO Where to add auxiliary objects such as music? Part of a scene (init and reset, ...)?
+
 var player Player
 var randomSeed seed.Seed
 

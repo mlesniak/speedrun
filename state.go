@@ -52,7 +52,7 @@ func updateState() {
 		return
 	}
 
-	frameCounter++
+	frameCounter++ // Will be removed, since each component should hold its own local state.
 	if !showHud {
 		player.Update()
 	}

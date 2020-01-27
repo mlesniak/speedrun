@@ -8,7 +8,7 @@ import (
 )
 
 var goals *resolv.Space
-var goal Goal
+var goal *Goal
 
 type Goal struct {
 	Object
@@ -24,7 +24,7 @@ func initGoals() {
 	goals = resolv.NewSpace()
 	x := rand.Intn(width/2) + ((width-1)*widthFactor - width/2)
 	y := rand.Intn(height)
-	goal = Goal{
+	goal = &Goal{
 		Object: Object{
 			Gray: 255,
 			Body: resolv.NewRectangle(int32(x), int32(y), player.Body.W, player.Body.H),
