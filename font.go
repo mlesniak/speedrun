@@ -47,7 +47,7 @@ func createFont(size float64) font.Face {
 	return loadedFont
 }
 
-// mustAudio checks if an error occured while loading a file.
+// mustFont checks if an error occured while loading a file.
 func mustFont(err error) {
 	if err != nil {
 		log.Fatal("Unable to load font:", err)
