@@ -119,8 +119,7 @@ func (player *Player) Update() {
 	// Check if goal reached.
 	if finalTime == 0.0 && goals.IsColliding(player.Body) {
 		finalTime = time.Now().Sub(startTime).Seconds()
-		if finalTime < bestTime {
-			bestTime = finalTime
+		if timer.UpdateHighscore(finalTime) {
 			PlayAudioTimes("goal", 2)
 		} else {
 			PlayAudio("goal")

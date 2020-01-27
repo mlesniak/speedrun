@@ -9,18 +9,17 @@ import (
 	"time"
 )
 
+// State
 var player Player
-
 var randomSeed seed.Seed
+
+// Variables
 
 var startTime time.Time
 var finalTime = 0.0
-var bestTime = math.MaxFloat64
-var borderWidth int32 = 5
 
 // Add scenes instead of a single boolean variable.
 var showHud = true
-var countDown time.Time
 
 func initalizeGame() {
 	if fullscreen {
@@ -33,7 +32,8 @@ func initalizeGame() {
 		randomSeed = seed.NewPreset(os.Args[1])
 	}
 
-	bestTime = math.MaxFloat64
+	timer = NewTimer()
+
 	PlayAudioTimes("background", math.MaxInt32)
 	resetGame()
 
@@ -51,7 +51,4 @@ func resetGame() {
 	// Start startTime
 	finalTime = 0.0
 	startTime = time.Now()
-
-	// For HUD.
-	countDown = time.Now()
 }
