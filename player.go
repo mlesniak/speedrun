@@ -7,7 +7,6 @@ import (
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"image/color"
 	"math"
-	"time"
 )
 
 type Player struct {
@@ -117,9 +116,8 @@ func (player *Player) Update() {
 	}
 
 	// Check if goal reached.
-	if finalTime == 0.0 && goals.IsColliding(player.Body) {
-		finalTime = time.Now().Sub(startTime).Seconds()
-		if timer.UpdateHighscore(finalTime) {
+	if goals.IsColliding(player.Body) {
+		if timer.UpdateTime() {
 			PlayAudioTimes("goal", 2)
 		} else {
 			PlayAudio("goal")

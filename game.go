@@ -14,9 +14,7 @@ var player Player
 var randomSeed seed.Seed
 
 // Variables
-
 var startTime time.Time
-var finalTime = 0.0
 
 // Add scenes instead of a single boolean variable.
 var showHud = true
@@ -48,7 +46,7 @@ func resetGame() {
 	initObstacles()
 	initGoals()
 
-	// Start startTime
-	finalTime = 0.0
+	timer.Reset()
+
 	startTime = time.Now()
 }

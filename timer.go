@@ -13,11 +13,13 @@ var timer *Timer
 
 type Timer struct {
 	highscore float64
+	goalTime  float64
 }
 
 func NewTimer() *Timer {
 	return &Timer{
 		highscore: math.MaxFloat64,
+		goalTime:  math.MaxFloat64,
 	}
 }
 
@@ -27,8 +29,8 @@ func (*Timer) Update() {
 
 func (t *Timer) Draw(screen *ebiten.Image) {
 	var passedTime float64
-	if finalTime != 0.0 {
-		passedTime = finalTime
+	if t.goalTime != math.MaxFloat64 {
+		passedTime = t.goalTime
 	} else {
 		passedTime = time.Now().Sub(startTime).Seconds()
 	}
@@ -41,11 +43,28 @@ func (t *Timer) Draw(screen *ebiten.Image) {
 	}
 }
 
-func (t *Timer) UpdateHighscore(score float64) bool {
+func (t *Timer) updateHighscore(score float64) bool {
 	if score < t.highscore {
 		t.highscore = score
 		return true
 	}
 
 	return false
+}
+
+// UpdateTime updates the final time in the timer, if not done yet.
+func (t *Timer) UpdateTime() bool {
+	// Already set? Ignore update.
+	if t.goalTime != math.MaxFloat64 {
+		return false
+	}
+
+	now := time.Now().Sub(startTime).Seconds()
+	t.goalTime = math.Min(now, t.goalTime)
+	return t.updateHighscore(t.goalTime)
+}
+
+// Reset resets the timer but keeps the highscore.
+func (t *Timer) Reset() {
+	t.goalTime = math.MaxFloat64
 }
