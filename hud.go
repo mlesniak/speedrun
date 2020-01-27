@@ -19,6 +19,8 @@ func (*Hud) Update() {
 }
 
 func (*Hud) Draw(screen *ebiten.Image) {
+	// TODO Countdown should not use start time of the timer but should have a timer on its own.
+
 	step := int64(750)
 	duration := int64(step * 4)
 	passedTime := duration - time.Now().Sub(startTime).Milliseconds()

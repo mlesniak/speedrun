@@ -14,12 +14,14 @@ var timer *Timer
 type Timer struct {
 	highscore float64
 	goalTime  float64
+	startTime time.Time
 }
 
 func NewTimer() *Timer {
 	return &Timer{
 		highscore: math.MaxFloat64,
 		goalTime:  math.MaxFloat64,
+		startTime: time.Now(),
 	}
 }
 
@@ -28,18 +30,20 @@ func (*Timer) Update() {
 }
 
 func (t *Timer) Draw(screen *ebiten.Image) {
-	var passedTime float64
+	// Draw passed time or reached time, if available.
+	var displayTime float64
 	if t.goalTime != math.MaxFloat64 {
-		passedTime = t.goalTime
+		displayTime = t.goalTime
 	} else {
-		passedTime = time.Now().Sub(startTime).Seconds()
+		displayTime = time.Now().Sub(t.startTime).Seconds()
 	}
-	secs := fmt.Sprintf("%.3f", passedTime)
-	text.Draw(screen, secs, Font(40), width-len(secs)*30, 45, color.Gray{Y: 200})
+	fmtTime := fmt.Sprintf("%.3f", displayTime)
+	text.Draw(screen, fmtTime, Font(40), width-len(fmtTime)*30, 45, color.Gray{Y: 200})
 
+	// Draw highscore if available.
 	if t.highscore != math.MaxFloat64 {
-		best := fmt.Sprintf("HIGH %.3f ", t.highscore)
-		text.Draw(screen, best, Font(20), width-len(best)*15, 80, color.Gray{Y: 150})
+		fmtHighscore := fmt.Sprintf("HIGH %.3f ", t.highscore)
+		text.Draw(screen, fmtHighscore, Font(20), width-len(fmtHighscore)*15, 80, color.Gray{Y: 150})
 	}
 }
 
@@ -59,7 +63,7 @@ func (t *Timer) UpdateTime() bool {
 		return false
 	}
 
-	now := time.Now().Sub(startTime).Seconds()
+	now := time.Now().Sub(t.startTime).Seconds()
 	t.goalTime = math.Min(now, t.goalTime)
 	return t.updateHighscore(t.goalTime)
 }
@@ -67,4 +71,5 @@ func (t *Timer) UpdateTime() bool {
 // Reset resets the timer but keeps the highscore.
 func (t *Timer) Reset() {
 	t.goalTime = math.MaxFloat64
+	t.startTime = time.Now()
 }
