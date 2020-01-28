@@ -16,12 +16,14 @@ var gameScene = &Scene{
 }
 
 // State TODO Later instead of global variables since each state can carry it's own state. Global variables for shared objects? Or copying?
-//type GameState struct {
-//	player    *Player
-//	obstacles *Obstacles
-//	goal      *Goal
-//	timer     *Timer
-//}
+type GameState struct {
+	player    *Player
+	obstacles *Obstacles
+	goal      *Goal
+	timer     *Timer
+}
+
+// TODO Add functions to Game instead of global ones. So we can store state. In particular, Update and Draw do not need to have parmaeters with passed game state
 
 // TODO Where to add auxiliary objects such as music? Part of a scene (init and reset, ...)?
 
