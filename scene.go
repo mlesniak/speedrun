@@ -1,20 +1,34 @@
 package main
 
+import "log"
+
 var currentScene *Scene
 
-var scenes map[string]*Scene
+// Scenes are mapped by identifiers.
+var scenes = make(map[string]*Scene)
 
+// TODO Should Update() receive a pointer to a Gamestate?
 type Scene struct {
-	Init   func() error
-	Reset  func() error
-	Update func() error
-	Draw   func() error
+	Init   func() error // Called once while adding the scene.
+	Reset  func() error // Called whenever the scene is reactivated.
+	Update func() error // Called for state changes.
+	Draw   func() error // Called for drawing state.
 }
 
-// We would define all scenes here?
-// Create scene
-// Add scene to list of scenes
-// GameLoop uses Scenes, independent of content of a scene
-// Allow to switch Scenes
+func AddScene(name string, scene *Scene) {
+	scenes[name] = scene
+	scene.Init()
+}
 
-// TODO Gamestate?
+func SetScene(name string) {
+	scene, found := scenes[name]
+	if !found {
+		log.Fatal("Scene not found:", name)
+	}
+	currentScene = scene
+	currentScene.Reset()
+}
+
+func GetCurrentScene() *Scene {
+	return currentScene
+}
