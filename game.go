@@ -8,13 +8,20 @@ import (
 	"os"
 )
 
-// State
-type GameState struct {
-	player    *Player
-	obstacles *Obstacles
-	goal      *Goal
-	timer     *Timer
+var gameScene = &Scene{
+	Init:   initalizeGame,
+	Reset:  resetGame,
+	Update: updateState,
+	Draw:   drawState,
 }
+
+// State TODO Later instead of global variables since each state can carry it's own state. Global variables for shared objects? Or copying?
+//type GameState struct {
+//	player    *Player
+//	obstacles *Obstacles
+//	goal      *Goal
+//	timer     *Timer
+//}
 
 // TODO Where to add auxiliary objects such as music? Part of a scene (init and reset, ...)?
 
@@ -30,6 +37,7 @@ func initalizeGame() {
 		ebiten.SetCursorVisible(false)
 	}
 
+	// TODO How to handle random seeds? Bug: hud shows other level code than later game since it's initialized two times
 	randomSeed = seed.New()
 	if len(os.Args) > 1 {
 		randomSeed = seed.NewPreset(os.Args[1])

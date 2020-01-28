@@ -1,5 +1,7 @@
 package main
 
+// TODO I don't like that in this file Hud is an Object and a scene.
+
 import (
 	"fmt"
 	"github.com/hajimehoshi/ebiten"
@@ -8,11 +10,22 @@ import (
 	"time"
 )
 
+// Define HudScene
+// Should the scene have an arbitrary state object, too?
+var hudScene = &Scene{
+	Init: func() {
+		hud = NewHud()
+	},
+	Reset:  hud.Reset,
+	Update: hud.Update,
+	Draw:   hud.Draw,
+}
+
 type Hud struct {
 	startTime time.Time
 }
 
-var hud *Hud = NewHud()
+var hud = NewHud()
 
 func NewHud() *Hud {
 	return &Hud{
@@ -21,16 +34,19 @@ func NewHud() *Hud {
 }
 
 func (*Hud) Update() {
-	// Empty
+	CheckExitKey()
 }
 
 func (h *Hud) Draw(screen *ebiten.Image) {
+	background.Draw(screen)
+
 	step := int64(750)
 	duration := int64(step * 4)
 	passedTime := duration - time.Now().Sub(h.startTime).Milliseconds()
 	if passedTime < step {
-		showHud = false
-		h.startTime = time.Now()
+		//showHud = false
+		h.startTime = time.Now() // TODO remove this, too
+		SetScene("game")
 		return
 	}
 	passedTime = passedTime / step

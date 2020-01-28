@@ -23,16 +23,17 @@ func getXTranslation() float64 {
 }
 
 func drawState(screen *ebiten.Image) {
-	// TODO Add scenese.
-	if showHud {
-		hud.Draw(screen)
-	} else {
-		goal.Draw(screen)
-		player.Draw(screen)
-		obstacles.Draw(screen)
-		levelcode.Draw(screen)
-		timer.Draw(screen)
-	}
+	background.Draw(screen)
+
+	//if showHud {
+	//	hud.Draw(screen)
+	//} else {
+	goal.Draw(screen)
+	player.Draw(screen)
+	obstacles.Draw(screen)
+	levelcode.Draw(screen)
+	timer.Draw(screen)
+	//}
 
 	debug.Draw(screen)
 }

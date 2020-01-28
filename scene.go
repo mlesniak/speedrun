@@ -1,6 +1,9 @@
 package main
 
-import "log"
+import (
+	"github.com/hajimehoshi/ebiten"
+	"log"
+)
 
 var currentScene *Scene
 
@@ -8,11 +11,12 @@ var currentScene *Scene
 var scenes = make(map[string]*Scene)
 
 // TODO Should Update() receive a pointer to a Gamestate?
+// TODO What happens when a game scene is finished?
 type Scene struct {
-	Init   func() error // Called once while adding the scene.
-	Reset  func() error // Called whenever the scene is reactivated.
-	Update func() error // Called for state changes.
-	Draw   func() error // Called for drawing state.
+	Init   func()              // Called once while adding the scene.
+	Reset  func()              // Called whenever the scene is reactivated.
+	Update func()              // Called for state changes.
+	Draw   func(*ebiten.Image) // Called for drawing state.
 }
 
 func AddScene(name string, scene *Scene) {
@@ -32,3 +36,5 @@ func SetScene(name string) {
 func GetCurrentScene() *Scene {
 	return currentScene
 }
+
+// TODO Create two scenes: HUD and actual Game. Where should these be defined?
