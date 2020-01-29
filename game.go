@@ -9,12 +9,10 @@ import (
 )
 
 var gameScene = &Scene{
-	Init: func() {
-		initalizeGame()
-	},
-	Reset:  gameState.resetGame, // BUG is nil of course...
+	Init:   gameState.initalizeGame,
+	Reset:  gameState.resetGame,
 	Update: gameState.updateState,
-	Draw:   drawState,
+	Draw:   gameState.drawState,
 }
 
 type GameState struct {
@@ -27,11 +25,9 @@ type GameState struct {
 	paused       bool // True if we should only check for keys but not change player position.
 }
 
-var gameState *GameState
+var gameState = new(GameState)
 
-func initalizeGame() {
-	gameState = new(GameState)
-
+func (g *GameState) initalizeGame() {
 	if fullscreen {
 		ebiten.SetFullscreen(true)
 		ebiten.SetCursorVisible(false)
@@ -54,13 +50,13 @@ func (g *GameState) resetGame() {
 	gameState.player = NewPlayer()
 }
 
-func CheckGameKeys() {
+func CheckGameKeys(g *GameState) {
 	if inpututil.IsKeyJustReleased(ebiten.KeyR) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton7) {
 		gameState.resetGame()
 	}
 
 	if inpututil.IsKeyJustReleased(ebiten.KeyN) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton6) {
-		initalizeGame()
+		g.initalizeGame()
 	}
 }
 
@@ -72,7 +68,7 @@ func CheckPauseKey(paused *bool) {
 
 func (g *GameState) updateState() {
 	CheckDebugKey()
-	CheckGameKeys()
+	CheckGameKeys(g)
 
 	CheckPauseKey(&g.paused)
 	if g.paused {
@@ -81,4 +77,14 @@ func (g *GameState) updateState() {
 
 	g.frameCounter++
 	g.player.Update(g)
+}
+
+func (g *GameState) drawState(screen *ebiten.Image) {
+	background.Draw(screen)
+	goal.Draw(screen)
+	g.player.Draw(screen)
+	g.obstacles.Draw(screen)
+	g.timer.Draw(screen)
+	levelcode.Draw(screen)
+	debug.Draw(screen)
 }

@@ -1,9 +1,5 @@
 package main
 
-//
-// --- REMINDER TO SELF: NO OVER-ENINEERING ------------------------------------------------------------------------------------------------
-//
-
 // Pack all assets into pkged.go for single file distribution.
 //
 //go:generate go get github.com/markbates/pkger/cmd/pkger
@@ -21,9 +17,9 @@ var randomSeed seed.Seed
 func main() {
 	InitializeRandomSeed()
 
-	AddScene("hudState", hudScene)
+	AddScene("hud", hudScene)
 	AddScene("game", gameScene)
-	SetScene("hudState")
+	SetScene("hud")
 
 	// Start game loop.
 	if err := ebiten.Run(GameLoop, width, height, 1.0, title); err != nil {

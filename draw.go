@@ -21,13 +21,3 @@ func getXTranslation() float64 {
 	}
 	return width / 2
 }
-
-func drawState(screen *ebiten.Image) {
-	background.Draw(screen)
-	goal.Draw(screen)
-	gameState.player.Draw(screen)
-	gameState.obstacles.Draw(screen)
-	levelcode.Draw(screen)
-	gameState.timer.Draw(screen)
-	debug.Draw(screen)
-}
