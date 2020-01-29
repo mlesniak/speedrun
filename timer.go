@@ -9,8 +9,6 @@ import (
 	"time"
 )
 
-var timer *Timer
-
 type Timer struct {
 	highscore float64
 	goalTime  float64

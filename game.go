@@ -1,7 +1,10 @@
 package main
 
+// TODO How to handle random seeds? Bug: hud shows other level code than later game since it's initialized two times
+
 import (
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/inpututil"
 	"github.com/mlesniak/speedrun/internal/seed"
 	"math"
 	"math/rand"
@@ -10,12 +13,11 @@ import (
 
 var gameScene = &Scene{
 	Init:   initalizeGame,
-	Reset:  resetGame,
+	Reset:  gameState.resetGame,
 	Update: updateState,
 	Draw:   drawState,
 }
 
-// State TODO Later instead of global variables since each state can carry it's own state. Global variables for shared objects? Or copying?
 type GameState struct {
 	player    *Player
 	obstacles *Obstacles
@@ -23,45 +25,79 @@ type GameState struct {
 	timer     *Timer
 }
 
-// TODO Add functions to Game instead of global ones. So we can store state. In particular, Update and Draw do not need to have parmaeters with passed game state
-
-// TODO Where to add auxiliary objects such as music? Part of a scene (init and reset, ...)?
-
-var player Player
-var randomSeed seed.Seed
-
-// Add scenes instead of a single boolean variable.
-var showHud = true
+var gameState *GameState
 
 func initalizeGame() {
+	gameState = new(GameState)
+
 	if fullscreen {
 		ebiten.SetFullscreen(true)
 		ebiten.SetCursorVisible(false)
 	}
 
-	// TODO How to handle random seeds? Bug: hud shows other level code than later game since it's initialized two times
 	randomSeed = seed.New()
 	if len(os.Args) > 1 {
 		randomSeed = seed.NewPreset(os.Args[1])
 	}
-
-	timer = NewTimer()
-
-	PlayAudioTimes("background", math.MaxInt32)
-	resetGame()
-
-	// For local development.
-	showHud = false
-}
-
-func resetGame() {
 	rand.Seed(randomSeed.Seed)
 
-	initPlayer()
-	initObstacles()
-	initGoals()
+	PlayAudioTimes("background", math.MaxInt32)
 
-	// TODO Currently leading to a bug where timer already starts.
-	timer.Reset()
-	hud.Reset()
+	gameState.timer = NewTimer()
+	gameState.player = NewPlayer()
+	gameState.obstacles = NewObstacles()
+	gameState.goal = initGoals()
+}
+
+func (g *GameState) resetGame() {
+	gameState.timer.Reset()
+	gameState.player = NewPlayer()
+}
+
+var frameCounter = 0
+var paused = false // True if the game is paused: state is not updated, but still drawn.
+
+func CheckGameKeys() {
+	if inpututil.IsKeyJustReleased(ebiten.KeyR) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton7) {
+		gameState.resetGame()
+	}
+
+	if inpututil.IsKeyJustReleased(ebiten.KeyN) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton6) {
+		initalizeGame()
+	}
+}
+
+func CheckExitKey() {
+	if ebiten.IsKeyPressed(ebiten.KeyEscape) || ebiten.IsKeyPressed(ebiten.KeyQ) {
+		os.Exit(0)
+	}
+}
+
+func CheckFullscreenKey() {
+	if inpututil.IsKeyJustReleased(ebiten.KeyF) {
+		fs := ebiten.IsFullscreen()
+		ebiten.SetFullscreen(!fs)
+		ebiten.SetCursorVisible(!fs)
+	}
+}
+
+func CheckPauseKey() {
+	if inpututil.IsKeyJustPressed(ebiten.KeyP) {
+		paused = !paused
+	}
+}
+
+func updateState() {
+	CheckExitKey()
+	CheckDebugKey()
+	CheckFullscreenKey()
+	CheckGameKeys()
+
+	CheckPauseKey()
+	if paused {
+		return
+	}
+
+	frameCounter++
+	gameState.player.Update()
 }

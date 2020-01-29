@@ -20,14 +20,16 @@ func (g *Goal) Draw(screen *ebiten.Image) {
 		color.Gray{Y: goal.Gray})
 }
 
-func initGoals() {
+func initGoals() *Goal {
 	goals = resolv.NewSpace()
 	x := rand.Intn(width/2) + ((width-1)*widthFactor - width/2)
 	y := rand.Intn(height)
 	goal = &Goal{
 		Object: Object{
 			Gray: 255,
-			Body: resolv.NewRectangle(int32(x), int32(y), player.Body.W, player.Body.H),
+			Body: resolv.NewRectangle(int32(x), int32(y), gameState.player.Body.W, gameState.player.Body.H),
 		}}
 	goals.Add(goal.Body)
+
+	return goal
 }

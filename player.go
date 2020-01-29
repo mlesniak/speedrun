@@ -9,6 +9,9 @@ import (
 	"math"
 )
 
+// For physics
+const gravity = 100
+
 type Player struct {
 	Object
 
@@ -19,10 +22,8 @@ type Player struct {
 	PreviousPosition []Vector2
 }
 
-const gravity = 100
-
-func initPlayer() {
-	player = Player{
+func NewPlayer() *Player {
+	return &Player{
 		Object: Object{
 			Body:         resolv.NewRectangle(0, height-20-borderWidth, 20, 20),
 			Velocity:     Vector2{},
@@ -116,9 +117,9 @@ func (player *Player) Update() {
 	}
 
 	// Check if goal reached.
-	// TODO Check that we did not reach the goal already (as game state, i.e. later) to prevent sound on each collision.
+	// BUG Check that we did not reach the goal already (as game state, i.e. later) to prevent sound on each collision.
 	if goals.IsColliding(player.Body) {
-		if timer.UpdateTime() {
+		if gameState.timer.UpdateTime() {
 			PlayAudioTimes("goal", 2)
 		} else {
 			PlayAudio("goal")

@@ -12,9 +12,9 @@ import (
 	"os"
 )
 
-func main() {
-	// initalizeGame()
+var randomSeed seed.Seed
 
+func main() {
 	randomSeed = seed.New()
 	if len(os.Args) > 1 {
 		randomSeed = seed.NewPreset(os.Args[1])
@@ -22,7 +22,7 @@ func main() {
 
 	AddScene("hud", hudScene)
 	AddScene("game", gameScene)
-	SetScene("game")
+	SetScene("hud")
 
 	// Start game loop.
 	if err := ebiten.Run(GameLoop, width, height, 1.0, title); err != nil {
@@ -32,20 +32,6 @@ func main() {
 
 // GameLoop is the main game loop, updating the current game updateState and (optionally) drawing it.
 func GameLoop(screen *ebiten.Image) error {
-	//background.Update()
-	//
-	//// Legacy objects.
-	//updateState()
-	//
-	//if ebiten.IsDrawingSkipped() {
-	//	return nil
-	//}
-	//
-	//background.Draw(screen)
-	//// Legacy objects.
-	//drawState(screen)
-	//return nil
-
 	GetCurrentScene().Update()
 	if !ebiten.IsDrawingSkipped() {
 		GetCurrentScene().Draw(screen)

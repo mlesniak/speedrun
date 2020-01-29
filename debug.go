@@ -26,10 +26,10 @@ func init() {
 		return fmt.Sprintf("Levelcode %s", randomSeed.Code)
 	})
 	AddDebugMessage(func() string {
-		return fmt.Sprintf("X=%.2v", player.Body.X)
+		return fmt.Sprintf("X=%.2v", gameState.player.Body.X)
 	})
 	AddDebugMessage(func() string {
-		return fmt.Sprintf("Translation=%.2f", -float64(player.Body.X)-width/2)
+		return fmt.Sprintf("Translation=%.2f", -float64(gameState.player.Body.X)-width/2)
 	})
 }
 

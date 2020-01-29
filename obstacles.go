@@ -8,7 +8,7 @@ import (
 	"math/rand"
 )
 
-var obstacles *Obstacles
+//var obstacles *Obstacles
 
 // Internal
 var walls *resolv.Space
@@ -29,7 +29,7 @@ func (*Obstacles) Draw(screen *ebiten.Image) {
 	drawBorders(screen)
 }
 
-func initObstacles() {
+func NewObstacles() *Obstacles {
 	// Add floor and ceiling to global space.
 	walls = resolv.NewSpace()
 	walls.Add(resolv.NewRectangle(0, height-borderWidth, (width * widthFactor), height-borderWidth))
@@ -50,7 +50,7 @@ func initObstacles() {
 		walls.Add(block.Body)
 	}
 
-	obstacles = new(Obstacles)
+	return new(Obstacles)
 }
 
 func drawBlocks(screen *ebiten.Image) {
