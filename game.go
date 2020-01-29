@@ -37,7 +37,7 @@ func initalizeGame() {
 		ebiten.SetCursorVisible(false)
 	}
 
-	// For debugging. Usually done by the hud.
+	// For debugging. Usually done by the hudState.
 	randomSeed = seed.New()
 	rand.Seed(randomSeed.Seed)
 

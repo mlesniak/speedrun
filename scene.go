@@ -11,10 +11,10 @@ var currentScene *Scene
 var scenes = make(map[string]*Scene)
 
 // TODO Should Update() receive a pointer to a Gamestate?
-// TODO What happens when a game scene is finished?
+// TODO What happens when a game bar is finished?
 type Scene struct {
-	Init   func()              // Called once while adding the scene.
-	Reset  func()              // Called whenever the scene is reactivated.
+	Init   func()              // Called once while adding the bar.
+	Reset  func()              // Called whenever the bar is reactivated.
 	Update func()              // Called for state changes.
 	Draw   func(*ebiten.Image) // Called for drawing state.
 }

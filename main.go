@@ -21,9 +21,9 @@ var randomSeed seed.Seed
 func main() {
 	InitializeRandomSeed()
 
-	AddScene("hud", hudScene)
+	AddScene("hudState", hudScene)
 	AddScene("game", gameScene)
-	SetScene("hud")
+	SetScene("hudState")
 
 	// Start game loop.
 	if err := ebiten.Run(GameLoop, width, height, 1.0, title); err != nil {

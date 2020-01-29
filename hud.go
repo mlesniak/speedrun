@@ -8,34 +8,32 @@ import (
 	"time"
 )
 
-var hud *Hud
+// Empty, but not yet fully functional. This approach is necessary, since method values bind their receiver, i.e. see my question
+// on StackOverflow at https://stackoverflow.com/questions/59971005/why-is-this-behaviour-regarding-method-pointers-and-global-variable-initializati
+var hudState = new(HudState)
 
 // Define HudScene
 var hudScene = &Scene{
-	Init: func() {
-		hud = NewHud()
-	},
-	Reset:  hud.Reset,
-	Update: hud.Update,
-	Draw:   hud.Draw,
+	Init:   hudState.initHud,
+	Reset:  hudState.Reset,
+	Update: hudState.Update,
+	Draw:   hudState.Draw,
 }
 
-type Hud struct {
+type HudState struct {
 	startTime time.Time
 }
 
-func NewHud() *Hud {
+func (h *HudState) initHud() {
 	InitializeRandomSeed()
-	return &Hud{
-		startTime: time.Now(),
-	}
+	h.startTime = time.Now()
 }
 
-func (*Hud) Update() {
+func (*HudState) Update() {
 	CheckExitKey()
 }
 
-func (h *Hud) Draw(screen *ebiten.Image) {
+func (h *HudState) Draw(screen *ebiten.Image) {
 	background.Draw(screen)
 
 	step := int64(750)
@@ -51,6 +49,6 @@ func (h *Hud) Draw(screen *ebiten.Image) {
 	text.Draw(screen, randomSeed.Code, Font(20), (width-len(randomSeed.Code)*10)/2, height/2+50, color.Gray{Y: 180})
 }
 
-func (h *Hud) Reset() {
-	hud = NewHud()
+func (h *HudState) Reset() {
+	h.initHud()
 }
