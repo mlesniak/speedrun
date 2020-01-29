@@ -21,39 +21,15 @@ and start the executable `speedrun`.
 - Keyboard left, right and up for movement. `N` for a new level, `R` to restart the current one, `F` to toggle fullscreen.
 - Gamepad: left analog stick to move, `B` to jump,  `ZR` for a new level, `ZL` to restart the current one.
 
-## Next release (unreleased; collecting changes)
+## Changelog
+
+The changelog for the current and all previous releases can be found on the [releases](https://github.com/mlesniak/speedrun/releases) page.
+
+Topics for the **release currently in development** are
 
 - [ ] Add splash screen with 'Start'-Button (beginning of menu)
 - [ ] Improve physics 
 - [ ] Simplify code structure (number of files, call hierarchy and global objects)
-
-## Release 0.2 (release name: 'Structure is good')
-
-While the game code is not as clean and documented as I wish, it made progress and is much better
-to understand. The next refactorings will be done while working on improving physics and adding features.
-
-- [X] **Cleanup code and restructure files**
-- [X] Add license
-- [X] [Allow `go get`](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffc9khm?utm_source=share&utm_medium=web2x); partially possible, see build instructions above for generating a asset-independent binary
-- [X] Pack assets into single binary
-- [X] [Make dots fade out with time not just dissapear.](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffc181e?utm_source=share&utm_medium=web2x)
-- [X] Extend this README
-
-## Release 0.1 (release name: 'F*ck it, Ship it')
-
-[Discussion on reddit](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/)
-
-- [X] The core is **currently a mess**, but hey, it's released ¯\\_(ツ)_/¯
-- [X] Game runs :-)
-- [X] Self-implemented arcade physics
-- [X] Self-implemented dynamic viewport
-- [X] Gamepad (Nintendo Pro Controller on a Mac) and keyboard support
-- [X] Background music and game sound effects
-- [X] Random levels with rememberable level names to replay
-- [X] Highscores 
-- [X] Using [ebiten](https://ebiten.org/) and [resolv](https://github.com/SolarLune/resolv).
-
-Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for the cool music!
 
 ## TODOs and IDEAs
 
