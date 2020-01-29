@@ -23,8 +23,16 @@ and start the executable `speedrun`.
 
 ## Next release (unreleased; collecting changes)
 
-- [ ] **Cleanup code**
-- [ ] **Restructure files**
+- [ ] Add splash screen with 'Start'-Button (beginning of menu)
+- [ ] Improve physics 
+- [ ] Simplify code structure (number of files, call hierarchy and global objects)
+
+## Release 0.2 (release name: 'Structure is good')
+
+While the game code is not as clean and documented as I wish, it made progress and is much better
+to understand. The next refactorings will be done while working on improving physics and adding features.
+
+- [X] **Cleanup code and restructure files**
 - [X] Add license
 - [X] [Allow `go get`](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffc9khm?utm_source=share&utm_medium=web2x); partially possible, see build instructions above for generating a asset-independent binary
 - [X] Pack assets into single binary
@@ -50,10 +58,10 @@ Thanks to [Patrick de Arteaga](https://patrickdearteaga.com/arcade-music) for th
 ## TODOs and IDEAs
 
 - [ ] Better gamepad support
-- [ ] Menus, Splashscreen
 - [ ] Ability to enter level codes
 - [ ] Release downloadable packages
 - [ ] [Tiled](https://www.mapeditor.org/) support? 
+- [ ] Highscore list stored on server, choosing of levels possible (maybe with thumbnails)?
 
 Based on [/u/jerf's](https://www.reddit.com/user/jerf/) [comment](https://www.reddit.com/r/golang/comments/ess860/release_01_codename_fck_it_ship_it_of_my_speedrun/ffcj3s1?utm_source=share&utm_medium=web2x)
 
@@ -62,8 +70,6 @@ Based on [/u/jerf's](https://www.reddit.com/user/jerf/) [comment](https://www.re
 > I'd suggest A: making the horizontal move more of an acceleration move, that asymptotically approaches a top speed (and not necessarily terribly quickly) and B: consider making jump take out some of the horizontal speed as well, perhaps even making the height of the jump partially dependent on horizontal speed. Another interesting thing I'd consider is making the "jump" button, when you are already in the air and very near a platform, reverse your horizontal momentum. I'd actually be inclined to play with not changing the vertical at all, though maybe a small boost might feel good. The idea is that maybe a skilled player might find a place in the level where the optimum move is to jump up and bounce off of two platforms to hit some hole at a higher speed than if they just came at it at the right, but slower, speed to jump through it directly.
 > 
 > That ought to give the physics a lot more character, and depth. Especially with horizontal speed determining jump height, there may well be a plodding, but safe, path through the level, but it would be slow. A more daring path might involve a lot more air time and higher horizontal speed, but with a greater chance of bonking. (Bonking time penalties proportional to the speed you bonk at might also help the risk/reward balance.)
-
-- [ ] Improve physics 
 
 ## License
 
