@@ -52,11 +52,11 @@ func (g *GameState) resetGame() {
 
 func CheckGameKeys(g *GameState) {
 	if inpututil.IsKeyJustReleased(ebiten.KeyR) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton7) {
-		gameState.resetGame()
+		g.resetGame()
 	}
 
 	if inpututil.IsKeyJustReleased(ebiten.KeyN) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton6) {
-		g.initalizeGame()
+		SetScene("hud")
 	}
 }
 
