@@ -1,5 +1,9 @@
 package main
 
+//
+// --- REMINDER TO SELF: NO OVER-ENINEERING ------------------------------------------------------------------------------------------------
+//
+
 // Pack all assets into pkged.go for single file distribution.
 //
 //go:generate go get github.com/markbates/pkger/cmd/pkger
@@ -15,10 +19,7 @@ import (
 var randomSeed seed.Seed
 
 func main() {
-	randomSeed = seed.New()
-	if len(os.Args) > 1 {
-		randomSeed = seed.NewPreset(os.Args[1])
-	}
+	InitializeRandomSeed()
 
 	AddScene("hud", hudScene)
 	AddScene("game", gameScene)
@@ -32,10 +33,20 @@ func main() {
 
 // GameLoop is the main game loop, updating the current game updateState and (optionally) drawing it.
 func GameLoop(screen *ebiten.Image) error {
+	CheckExitKey()
+	CheckFullscreenKey()
+
 	GetCurrentScene().Update()
 	if !ebiten.IsDrawingSkipped() {
 		GetCurrentScene().Draw(screen)
 	}
 
 	return nil
+}
+
+func InitializeRandomSeed() {
+	randomSeed = seed.New()
+	if len(os.Args) > 1 {
+		randomSeed = seed.NewPreset(os.Args[1])
+	}
 }

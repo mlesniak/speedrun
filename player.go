@@ -34,7 +34,7 @@ func NewPlayer() *Player {
 	}
 }
 
-func (player *Player) Update() {
+func (player *Player) Update(g *GameState) {
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) || inpututil.IsGamepadButtonJustPressed(0, ebiten.GamepadButton0) {
 		player.jumped++
 		switch player.jumped {
@@ -107,7 +107,7 @@ func (player *Player) Update() {
 	}
 
 	// Update historic positions.
-	if frameCounter%numHistoricFramesUpdate == 0 {
+	if g.frameCounter%numHistoricFramesUpdate == 0 {
 		if len(player.PreviousPosition) < numHistoricFrames {
 			player.PreviousPosition = append(player.PreviousPosition, Vector2{float64(player.Body.X), float64(player.Body.Y)})
 		} else {
