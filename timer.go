@@ -23,10 +23,6 @@ func NewTimer() *Timer {
 	}
 }
 
-func (*Timer) Update() {
-	// Empty?
-}
-
 func (t *Timer) Draw(screen *ebiten.Image) {
 	// Draw passed time or reached time, if available.
 	var displayTime float64

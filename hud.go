@@ -5,6 +5,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/text"
 	"image/color"
+	"math"
 	"time"
 )
 
@@ -27,6 +28,7 @@ type HudState struct {
 func (h *HudState) initHud() {
 	InitializeRandomSeed()
 	h.startTime = time.Now()
+	PlayAudioTimes("background", math.MaxInt32)
 }
 
 func (*HudState) Update() {

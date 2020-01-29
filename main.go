@@ -9,6 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/mlesniak/speedrun/internal/seed"
 	"log"
+	"math/rand"
 	"os"
 )
 
@@ -45,4 +46,5 @@ func InitializeRandomSeed() {
 	if len(os.Args) > 1 {
 		randomSeed = seed.NewPreset(os.Args[1])
 	}
+	rand.Seed(randomSeed.Seed)
 }

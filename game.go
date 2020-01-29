@@ -3,9 +3,7 @@ package main
 import (
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/inpututil"
-	"github.com/mlesniak/speedrun/internal/seed"
 	"math"
-	"math/rand"
 )
 
 var gameScene = &Scene{
@@ -34,15 +32,17 @@ func (g *GameState) initalizeGame() {
 	}
 
 	// For debugging. Usually done by the hudState.
-	randomSeed = seed.New()
-	rand.Seed(randomSeed.Seed)
+	//randomSeed = seed.New()
+	//rand.Seed(randomSeed.Seed)
 
-	PlayAudioTimes("background", math.MaxInt32)
+	if !IsPlaying("background") {
+		PlayAudioTimes("background", math.MaxInt32)
+	}
 
 	gameState.timer = NewTimer()
 	gameState.player = NewPlayer()
 	gameState.obstacles = NewObstacles()
-	gameState.goal = initGoals()
+	gameState.goal = NewGoal()
 }
 
 func (g *GameState) resetGame() {

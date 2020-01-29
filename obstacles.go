@@ -8,8 +8,6 @@ import (
 	"math/rand"
 )
 
-//var obstacles *Obstacles
-
 // Internal
 var walls *resolv.Space
 var blocks = []Object{}
@@ -18,10 +16,6 @@ type Obstacles struct {
 	// Shold we have an object for each block / wall or should we look at all walls as one (for now)?
 	//
 	// Empty for now...
-}
-
-func (*Obstacles) Update() {
-	// Empty.
 }
 
 func (*Obstacles) Draw(screen *ebiten.Image) {

@@ -10,8 +10,6 @@ var currentScene *Scene
 // Scenes are mapped by identifiers.
 var scenes = make(map[string]*Scene)
 
-// TODO Should Update() receive a pointer to a Gamestate?
-// TODO What happens when a game bar is finished?
 type Scene struct {
 	Init   func()              // Called once while adding the bar.
 	Reset  func()              // Called whenever the bar is reactivated.
@@ -36,5 +34,3 @@ func SetScene(name string) {
 func GetCurrentScene() *Scene {
 	return currentScene
 }
-
-// TODO Create two scenes: HUD and actual Game. Where should these be defined?

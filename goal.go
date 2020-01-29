@@ -20,7 +20,7 @@ func (g *Goal) Draw(screen *ebiten.Image) {
 		color.Gray{Y: goal.Gray})
 }
 
-func initGoals() *Goal {
+func NewGoal() *Goal {
 	goals = resolv.NewSpace()
 	x := rand.Intn(width/2) + ((width-1)*widthFactor - width/2)
 	y := rand.Intn(height)

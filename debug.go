@@ -10,16 +10,13 @@ import (
 
 type debugFunc func() string
 
-var debugFunctions = []debugFunc{}
-
-// If true, debug information is displayed.
-var showDebug = false
-
+// Encapsulates all debugging information.
 type Debug struct {
-	// Empty
+	showDebug      bool
+	debugFunctions []debugFunc
 }
 
-var debug *Debug = new(Debug)
+var debug = new(Debug)
 
 func init() {
 	AddDebugMessage(func() string {
@@ -34,24 +31,24 @@ func init() {
 }
 
 func AddDebugMessage(f debugFunc) {
-	debugFunctions = append(debugFunctions, f)
+	debug.debugFunctions = append(debug.debugFunctions, f)
 }
 
 func CheckDebugKey() {
 	if inpututil.IsKeyJustReleased(ebiten.KeyD) {
-		showDebug = !showDebug
+		debug.showDebug = !debug.showDebug
 	}
 }
 
 func (*Debug) Draw(screen *ebiten.Image) {
-	if !showDebug {
+	if !debug.showDebug {
 		return
 	}
 
 	// Show text
 	rowHeight := 14
 	y := 50 // Draw under level code display.
-	for _, function := range debugFunctions {
+	for _, function := range debug.debugFunctions {
 		msg := function()
 		ebitenutil.DebugPrintAt(screen, msg, 10, y)
 		y += rowHeight

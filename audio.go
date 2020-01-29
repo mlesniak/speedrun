@@ -52,6 +52,10 @@ func PlayAudio(name string) {
 	PlayAudioTimes(name, 1)
 }
 
+func IsPlaying(name string) bool {
+	return audioPlayer[name].IsPlaying()
+}
+
 // PlayAudioTimes plays an audio file multiple times.
 func PlayAudioTimes(name string, times int) {
 	player := audioPlayer[name]
